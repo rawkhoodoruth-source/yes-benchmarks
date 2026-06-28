@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="320" height="160">
+  <style>
+    .y { font-family: Arial Rounded MT Bold, Arial Black, sans-serif; font-weight: 900; fill: #e84c1b; }
+    .sub { font-family: Arial, Helvetica, sans-serif; font-weight: 400; fill: #e84c1b; letter-spacing: 2px; }
+  </style>
+  <!-- Y -->
+  <text x="10" y="115" font-size="130" class="y">Y</text>
+  <!-- keyhole inside Y stem -->
+  <ellipse cx="62" cy="96" rx="7" ry="8" fill="#fff"/>
+  <rect x="58" y="100" width="8" height="12" rx="2" fill="#fff"/>
+  <!-- es -->
+  <text x="88" y="115" font-size="130" class="y">es</text>
+  <!-- conciergerie -->
+  <text x="50" y="148" font-size="22" class="sub">conciergerie</text>
+</svg>
