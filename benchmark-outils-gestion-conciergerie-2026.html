@@ -185,9 +185,9 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
     <button class="tab active" onclick="showTab('synthese',this)"><i class="ti ti-chart-bar"></i> Synthèse</button>
     <button class="tab" onclick="showTab('comparatif',this)"><i class="ti ti-table"></i> Comparatif modules</button>
     <button class="tab" onclick="showTab('scoring',this)"><i class="ti ti-trophy"></i> Scoring</button>
+    <button class="tab" onclick="showTab('reco',this)" style="color:#15803d;font-weight:600"><i class="ti ti-bulb"></i> Recommandation ★</button>
     <button class="tab" onclick="showTab('pricing',this)"><i class="ti ti-currency-euro"></i> Pricing marché</button>
     <button class="tab" onclick="showTab('outils-desc',this)"><i class="ti ti-info-circle"></i> À quoi servent ces outils ?</button>
-    <button class="tab" onclick="showTab('reco',this)" style="color:#15803d;font-weight:600"><i class="ti ti-bulb"></i> Recommandation ★</button>
   </div>
 
   <!-- SYNTHÈSE -->
@@ -299,38 +299,94 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
 
   <!-- RECOMMANDATION -->
   <div class="pane" id="pane-reco">
-    <div class="reco-section">
-      <h3><i class="ti ti-bulb"></i> Positionnement tarifaire recommandé — Outil de Gestion Yes Conciergerie</h3>
-      <p>L'outil Yes couvre <strong>22 modules</strong> vs 8 en moyenne pour les outils du marché. Il est le seul à intégrer franchiseur + franchisé + propriétaire + voyageur dans une seule plateforme. Le marché facture 520–790 €/mois pour une couverture partielle. L'outil Yes doit être positionné comme <strong>une économie nette pour le franchisé</strong>, pas comme une charge supplémentaire.</p>
+
+    <!-- INTRO -->
+    <div style="background:linear-gradient(135deg,#0f172a,#1e3a8a);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem;color:#fff">
+      <div style="font-size:10px;font-weight:700;color:#818cf8;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem">Positionnement tarifaire</div>
+      <div style="font-size:17px;font-weight:800;margin-bottom:.5rem">Outil de Gestion Yes Conciergerie</div>
+      <p style="font-size:11px;color:#94a3b8;line-height:1.7">L'outil Yes est le seul du marché à couvrir <strong style="color:#fff">22 modules</strong> et les 4 acteurs simultanément (Franchiseur · Franchisé · Propriétaire · Voyageur). Le marché facture <strong style="color:#f87171">400–900 €/mois</strong> pour une couverture partielle et fragmentée. L'outil Yes doit être positionné comme une <strong style="color:#4ade80">économie nette immédiate</strong> pour le franchisé, pas comme une charge supplémentaire.</p>
     </div>
 
-    <div class="pricing-scenarios">
-      <div class="scenario s1">
-        <div class="s-title">Scénario A — Inclus royalties</div>
-        <div class="s-price">0 €</div>
-        <div class="s-unit">facturation séparée / mois</div>
-        <div class="s-note">L'outil est intégré dans les 6 % de redevance réseau. Argument commercial fort : "tout compris". Risque : perception que les royalties sont élevées si l'outil n'est pas valorisé explicitement.</div>
+    <!-- POURQUOI 199€ -->
+    <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1rem">
+      <div style="font-size:12px;font-weight:800;color:#1e293b;margin-bottom:1rem;display:flex;align-items:center;gap:6px"><span style="background:#fef3c7;border-radius:6px;padding:2px 8px;font-size:10px;color:#92400e">CALCUL</span> Pourquoi 199 €HT/mois ?</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin-bottom:1rem">
+        <div style="background:#f8fafc;border-radius:10px;padding:.8rem 1rem;border-left:3px solid #dc2626">
+          <div style="font-size:9.5px;font-weight:700;color:#dc2626;margin-bottom:.3rem">Stack DIY minimum (10 biens)</div>
+          <div style="font-size:20px;font-weight:800;color:#1e293b">785 €<span style="font-size:10px;font-weight:400;color:#64748b">/mois</span></div>
+          <div style="font-size:9px;color:#94a3b8;margin-top:2px">Superhote + Biloki + PriceLabs + Hostfully + Pipedrive + Tiime + Teachable</div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;padding:.8rem 1rem;border-left:3px solid #f59e0b">
+          <div style="font-size:9.5px;font-weight:700;color:#b45309;margin-bottom:.3rem">Meilleure alternative spécialisée</div>
+          <div style="font-size:20px;font-weight:800;color:#1e293b">149 €<span style="font-size:10px;font-weight:400;color:#64748b">/mois</span></div>
+          <div style="font-size:9px;color:#94a3b8;margin-top:2px">Biloki — 12/22 modules · pas de franchise · pas d'IA · pas d'Academy</div>
+        </div>
+        <div style="background:#f8fafc;border-radius:10px;padding:.8rem 1rem;border-left:3px solid #059669">
+          <div style="font-size:9.5px;font-weight:700;color:#059669;margin-bottom:.3rem">Yes Outil Interne ★</div>
+          <div style="font-size:20px;font-weight:800;color:#15803d">199 €<span style="font-size:10px;font-weight:400;color:#64748b">/mois</span></div>
+          <div style="font-size:9px;color:#94a3b8;margin-top:2px">22/22 modules · 4 acteurs · IA · Academy · conformité LCD · support réseau</div>
+        </div>
       </div>
-      <div class="scenario s2">
-        <div class="s-title">Scénario B — SaaS séparé ★</div>
-        <div class="s-price">180–250 €</div>
-        <div class="s-unit">HT / mois / franchisé</div>
-        <div class="s-note">Ligne distincte dans le contrat. Positionné comme économie vs marché (650 €/mois économisés). Revenu récurrent visible pour le franchiseur. Recommandé : 199 €HT/mois an 1, 249 €HT/mois an 2+.</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:flex-start;gap:8px;font-size:10.5px;color:#334155"><span style="color:#059669;font-size:13px;flex-shrink:0">→</span><span><strong>199€ = 75% moins cher que le Stack DIY</strong> (586€ économisés/mois, soit 7 032€/an par franchisé).</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;font-size:10.5px;color:#334155"><span style="color:#059669;font-size:13px;flex-shrink:0">→</span><span><strong>+33% de prime vs Biloki</strong> (la référence la plus proche) mais pour <strong>83% de modules supplémentaires</strong> (22 vs 12) et la dimension réseau franchise incluse.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;font-size:10.5px;color:#334155"><span style="color:#059669;font-size:13px;flex-shrink:0">→</span><span><strong>Seuil psychologique</strong> : sous 200€/mois, le franchisé perçoit l'outil comme un poste de coût raisonnable, comparable à un abonnement SaaS standard.</span></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;font-size:10.5px;color:#334155"><span style="color:#059669;font-size:13px;flex-shrink:0">→</span><span><strong>Argument commercial clé</strong> : "Vous économisez 586€/mois dès le 1er mois, soit votre outil gratuit + 387€ de bénéfice net."</span></div>
       </div>
+    </div>
+
+    <!-- 2 OPTIONS -->
+    <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:.6rem">2 options tarifaires</div>
+    <div class="pricing-scenarios" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+
+      <div class="scenario s2" style="border:2px solid #15803d;position:relative">
+        <div style="position:absolute;top:-10px;left:1rem;background:#15803d;color:#fff;font-size:9px;font-weight:700;padding:2px 10px;border-radius:20px">★ RECOMMANDÉ</div>
+        <div class="s-title">Option 1 — Forfait fixe</div>
+        <div class="s-price">199 <span style="font-size:14px">€HT</span></div>
+        <div class="s-unit">/mois/franchisé · an 1 — puis 249 €HT/mois an 2+</div>
+        <div class="s-note" style="margin-top:.7rem">
+          <div style="margin-bottom:.4rem">Accès complet aux 22 modules, illimité en nombre de biens gérés. Ligne distincte dans le contrat de franchise.</div>
+          <div style="display:flex;flex-direction:column;gap:3px;margin-top:.5rem">
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ 22 modules inclus sans exception</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Illimité en logements gérés</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Yes Academy + 8 assistants IA inclus</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Mises à jour & support réseau inclus</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Simple à vendre : 1 prix, 0 surprise</div>
+          </div>
+          <div style="margin-top:.7rem;padding:.5rem .7rem;background:#f0fdf4;border-radius:8px;font-size:10px;color:#14532d">
+            <strong>MRR réseau :</strong> 10 franchisés = 1 990€/mois · 20 = 3 980€/mois · 30 = 5 970€/mois
+          </div>
+        </div>
+      </div>
+
       <div class="scenario s3">
-        <div class="s-title">Scénario C — Modulaire</div>
-        <div class="s-price">99–350 €</div>
-        <div class="s-unit">HT / mois selon modules</div>
-        <div class="s-note">Socle PMS + portail à 99 €/mois. Options IA, Academy, multi-devises en supplément. Flexible mais complexifie la grille tarifaire. Recommandé uniquement si ouverture à des clients hors réseau.</div>
+        <div class="s-title">Option 2 — Modulaire</div>
+        <div class="s-price">99 <span style="font-size:14px">€HT</span></div>
+        <div class="s-unit">/mois · socle de base</div>
+        <div class="s-note" style="margin-top:.7rem">
+          <div style="margin-bottom:.5rem">Socle PMS + portail propriétaire + facturation. Modules complémentaires en options mensuelles.</div>
+          <div style="display:flex;flex-direction:column;gap:4px;margin-top:.5rem">
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#334155;border-bottom:1px solid #f1f5f9;padding-bottom:3px"><span>Socle PMS + portail + facturation</span><span style="font-weight:700">99 €</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#334155;border-bottom:1px solid #f1f5f9;padding-bottom:3px"><span>+ Module IA (8 assistants)</span><span style="font-weight:700">+39 €</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#334155;border-bottom:1px solid #f1f5f9;padding-bottom:3px"><span>+ Yes Academy (LMS)</span><span style="font-weight:700">+29 €</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#334155;border-bottom:1px solid #f1f5f9;padding-bottom:3px"><span>+ Gestion réseau franchise</span><span style="font-weight:700">+29 €</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:#7c3aed;font-weight:700"><span>Suite complète</span><span>196 € ≈ 199 €</span></div>
+          </div>
+          <div style="margin-top:.7rem;padding:.5rem .7rem;background:#fdf4ff;border-radius:8px;font-size:10px;color:#6b21a8">
+            <strong>Usage :</strong> Réservé aux partenaires hors réseau franchise ou clients B2B externes souhaitant des modules à la carte.
+          </div>
+        </div>
       </div>
+
     </div>
 
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:1rem">
-      <div style="background:#0f172a;color:#fff;padding:.7rem 1rem;font-size:11.5px;font-weight:700">Argumentation commerciale — valeur justifiée</div>
+    <!-- TABLEAU VALEUR -->
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:1rem;margin-top:1rem">
+      <div style="background:#0f172a;color:#fff;padding:.7rem 1rem;font-size:11px;font-weight:700">Ce que l'outil remplace — argumentation commerciale</div>
       <div style="padding:.9rem 1rem">
         <div class="tbl-wrap" style="max-height:none">
           <table>
-            <thead><tr><th>Ce que l'outil remplace</th><th>Coût marché / mois</th><th>Couverture Yes</th><th>Économie annuelle</th></tr></thead>
+            <thead><tr><th>Ce que l'outil remplace</th><th>Coût marché / mois</th><th>Couverture Yes</th><th>Économie / mois</th></tr></thead>
             <tbody id="value-body"></tbody>
           </table>
         </div>
@@ -338,7 +394,7 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
     </div>
 
     <div class="verdict-box verdict-green">
-      <strong>Recommandation finale :</strong> Opter pour le <strong>Scénario B à 199 €HT/mois an 1 / 249 €HT/mois an 2+</strong>. C'est 3× moins cher que le stack de remplacement (650 €/mois), positionnable comme "économie nette de 450–600 €/mois dès le premier mois". Sur 20 franchisés : <strong>47 760 à 59 760 €HT/an de revenu SaaS récurrent</strong> pour le réseau, indépendamment des royalties CA. Ce revenu finance le développement et la maintenance de la plateforme. Prévoir une clause de révision annuelle (indexation +5% max) dans le contrat.
+      <strong>Conclusion :</strong> L'Option 1 à <strong>199 €HT/mois</strong> est le bon équilibre — sous le seuil psychologique des 200€, 75% moins cher que le Stack DIY, et générant un <strong>MRR récurrent indépendant des royalties</strong>. L'Option 2 modulaire peut être proposée à des partenaires externes. Prévoir une révision tarifaire à +249€/mois à partir de l'an 2, avec clause contractuelle d'indexation annuelle plafonnée à +10%.
     </div>
   </div>
 
@@ -744,6 +800,7 @@ function showTab(id,btn){
 }
 
 renderSyn();renderCharts();renderFeatTable();renderScoring();renderPricing();renderOutilsDesc();
+document.getElementById('value-body').innerHTML=valueArgs.map(v=>`<tr><td>${v.rep}</td><td style="font-weight:600;color:#b91c1c">${v.cout}</td><td style="font-size:10px;color:#64748b">${v.couv}</td><td style="font-weight:600;color:#059669">${v.eco}</td></tr>`).join('');
 </script>
 </body>
 </html>
