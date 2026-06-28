@@ -782,6 +782,14 @@ function refreshRemaining(){
         const fmted=amt?amt.toLocaleString('fr-FR')+' €HT':'À définir';
         html+=`<div class="brow out" style="opacity:.85"><span class="bname">${lbl}</span><span class="bamt red">${fmted}</span></div>`;
       }
+      if(id==='outil'){
+        const amt=parseFloat(row.querySelector('.edit-amt')?.value||0)||0;
+        if(amt>0) html+=`<div class="brow out" style="opacity:.85;background:#f0fdf4;border-color:#bbf7d0"><span class="bname">Outil de gestion interne</span><span class="bamt green">${amt.toLocaleString('fr-FR')} €HT/mois</span></div>`;
+      }
+      if(id==='setup-sept'){
+        const amt=parseFloat(row.querySelector('.edit-amt')?.value||0)||0;
+        if(amt>0) html+=`<div class="brow out" style="opacity:.85;background:#fefce8;border-color:#fde68a"><span class="bname">Setup franchisés sept. 2026</span><span class="bamt orange">${amt.toLocaleString('fr-FR')} €HT (one-off)</span></div>`;
+      }
     }
   });
   const absorbed=document.querySelectorAll('#pane-propale .brow.in-de[data-id]').length;
@@ -799,6 +807,16 @@ function refreshRemaining(){
       chargesHorsDE+=parseFloat(r.querySelector('.edit-amt')?.value||0)||0;
     }
   });
+  // Outil de gestion = mensuel × 12
+  const rOutil=document.querySelector('[data-id="outil"]');
+  if(rOutil&&rOutil.classList.contains('out')){
+    chargesHorsDE+=(parseFloat(rOutil.querySelector('.edit-amt')?.value||0)||0)*12;
+  }
+  // Setup sept. = one-off (compté une fois dans l'annuel)
+  const rSetup=document.querySelector('[data-id="setup-sept"]');
+  if(rSetup&&rSetup.classList.contains('out')){
+    chargesHorsDE+=parseFloat(rSetup.querySelector('.edit-amt')?.value||0)||0;
+  }
   const totalAnnuel=plancherVal+chargesHorsDE;
   const elTotal=document.getElementById('recap-total-annuel');
   if(elTotal)elTotal.textContent=totalAnnuel.toLocaleString('fr-FR')+' €HT/an';
@@ -818,8 +836,8 @@ function toggleDE(btn){
 }
 
 function updateAmt(input){
-  const id=input.closest('.brow')?.dataset.id;
-  if(id==='outil'||id==='setup-sept'||id==='leads'){refreshDE();return;}
+  const row=input.closest('.brow');
+  if(row) row.dataset.amount=parseFloat(input.value)||0;
   refreshDE();
 }
 
