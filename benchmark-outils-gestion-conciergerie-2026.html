@@ -254,6 +254,13 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
             <span class="sim-val" id="sim-fr-val">1</span>
           </div>
         </div>
+        <div class="sim-ctrl">
+          <div class="sim-label"><i class="ti ti-currency-euro"></i> Prix Yes (€HT/mois)</div>
+          <div class="sim-slider-row">
+            <input type="number" min="99" max="499" value="199" id="sim-yes-price" oninput="updateSim()" style="width:80px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;font-size:18px;font-weight:800;padding:4px 8px;text-align:center">
+            <span style="font-size:10px;color:#64748b">€HT</span>
+          </div>
+        </div>
         <div class="sim-ctrl sim-ctrl-toggle">
           <div class="sim-label"><i class="ti ti-layout-columns"></i> Vue</div>
           <div class="sim-toggle">
@@ -304,7 +311,7 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
     <div style="background:linear-gradient(135deg,#0f172a,#1e3a8a);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1rem;color:#fff">
       <div style="font-size:10px;font-weight:700;color:#818cf8;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem">Positionnement tarifaire</div>
       <div style="font-size:17px;font-weight:800;margin-bottom:.5rem">Outil de Gestion Yes Conciergerie</div>
-      <p style="font-size:11px;color:#94a3b8;line-height:1.7">L'outil Yes est le seul du marché à couvrir <strong style="color:#fff">22 modules</strong> et les 4 acteurs simultanément (Franchiseur · Franchisé · Propriétaire · Voyageur). Le marché facture <strong style="color:#f87171">400–900 €/mois</strong> pour une couverture partielle et fragmentée. L'outil Yes doit être positionné comme une <strong style="color:#4ade80">économie nette immédiate</strong> pour le franchisé, pas comme une charge supplémentaire.</p>
+      <p style="font-size:11px;color:#94a3b8;line-height:1.7">L'outil Yes est le seul du marché à couvrir les 4 acteurs en une interface unique. <strong style="color:#e2e8f0">Vue Franchiseur</strong> : Projets, Dashboard (Royalties · Trésorerie · Paiements · Droits d'entrée), CRM (Candidats · Franchisés · Démarrages), Comptes, Yes Academy, Messagerie. <strong style="color:#e2e8f0">Vue Franchisé (Cockpit)</strong> : Dashboard, Logements, CRM propriétaires, Finances, PMS, Incidents, Stocks, Ménage, Calendrier, Médiathèque, Messagerie réseau, Annuaire, Yes Academy. Le marché facture <strong style="color:#f87171">400–900 €/mois</strong> pour couvrir partiellement ces modules. L'outil Yes = <strong style="color:#4ade80">économie nette immédiate</strong>, pas une charge supplémentaire.</p>
     </div>
 
     <!-- POURQUOI 199€ -->
@@ -347,11 +354,11 @@ tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
         <div class="s-note" style="margin-top:.7rem">
           <div style="margin-bottom:.4rem">Accès complet aux 22 modules, illimité en nombre de biens gérés. Ligne distincte dans le contrat de franchise.</div>
           <div style="display:flex;flex-direction:column;gap:3px;margin-top:.5rem">
-            <div style="font-size:10px;color:#15803d;font-weight:600">✓ 22 modules inclus sans exception</div>
-            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Illimité en logements gérés</div>
-            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Yes Academy + 8 assistants IA inclus</div>
-            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Mises à jour & support réseau inclus</div>
-            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Simple à vendre : 1 prix, 0 surprise</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Vue Franchiseur : CRM, Royalties, Trésorerie, Droits d'entrée</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Vue Franchisé Cockpit : PMS, Logements, Finances, Incidents, Stocks</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Génération de devis propriétaires + Médiathèque</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ Yes Academy + Messagerie réseau + Annuaire</div>
+            <div style="font-size:10px;color:#15803d;font-weight:600">✓ 8 assistants IA · support réseau · mises à jour incluses</div>
           </div>
           <div style="margin-top:.7rem;padding:.5rem .7rem;background:#f0fdf4;border-radius:8px;font-size:10px;color:#14532d">
             <strong>MRR réseau :</strong> 10 franchisés = 1 990€/mois · 20 = 3 980€/mois · 30 = 5 970€/mois
@@ -625,7 +632,7 @@ const outilsDesc=[
   {n:"Breezeway",icon:"ti-checklist",color:"#d97706",bg:"#fffbeb",cat:"Opérations & Maintenance 🇺🇸",desc:"Plateforme dédiée à l'excellence opérationnelle : planification du ménage, inspections qualité, gestion des incidents et suivi des stocks de consommables. Très fort sur les modules 11 et 12 du cahier des charges Yes. Doit être combiné avec un PMS.",points:["Planning ménage avec app mobile prestataires","Inspections qualité avec photos","Gestion incidents et maintenance","Suivi stocks consommables","Rapports qualité automatisés"]},
   {n:"Jurny",icon:"ti-robot",color:"#c2410c",bg:"#fff7ed",cat:"PMS IA-first 🇺🇸",desc:"Nouvelle génération de PMS entièrement centré sur l'IA. Automatise les messages voyageurs, génère des livrets adaptatifs, optimise l'upsell et automatise le check-in. Très innovant mais peu implanté en France. Aucune gestion réseau franchise.",points:["PMS avec IA intégrée nativement","Livret voyageur généré par IA","Messagerie adaptative selon profil voyageur","Upsell automatique intelligent","Check-in entièrement automatisé"]},
   {n:"Stack DIY ×7",icon:"ti-tool",color:"#374151",bg:"#f8fafc",cat:"Concept — assemblage DIY",desc:"Ce n'est pas un produit : c'est ce qu'un franchisé devrait assembler lui-même s'il n'avait pas la plateforme Yes. 7 outils distincts, non intégrés, avec des doubles-saisies entre chaque. Coût total vérifié : 400–900 €/mois selon volume de biens. Silos de données, perte de temps, risque d'erreurs.",points:["Superhote — PMS + channel manager (57–200 €/mois)","Biloki — portail propriétaire + devis (99–250 €/mois)","PriceLabs — tarification dynamique à $19,99/bien/mois (90–185 €/mois)","Hostfully — livret voyageur (46–130 €/mois)","Pipedrive — CRM candidats franchisés (15–75 €/mois)","Tiime / Pennylane — comptabilité (30–60 €/mois)","Teachable / Notion + Claude Pro — formation & IA (35–90 €/mois)"]},
-  {n:"Yes Outil Interne ★",icon:"ti-building-community",color:"#15803d",bg:"#f0fdf4",cat:"Plateforme réseau 360° 🇫🇷",desc:"Plateforme interne Yes Conciergerie couvrant les 4 acteurs du réseau en une seule interface. Deux vues distinctes : Franchiseur (pilotage réseau, CRM candidats, royalties, trésorerie) et Franchisé — Yes Cockpit (logements, CRM, finances, PMS, incidents, stocks, ménage). Aucun équivalent sur le marché.",points:["Vue Franchiseur : CRM 168 candidats, 23 franchisés, Royalties & Trésorerie","Vue Franchisé (Cockpit) : PMS, Logements, CRM, Finances","Incidents, Stocks, Ménage — opérationnel terrain","Génération de devis propriétaires (pas de facturation)","Yes Academy, Messagerie réseau, Annuaire, Médiathèque","8 assistants IA contextuels intégrés"]},
+  {n:"Yes Outil Interne ★",icon:"ti-building-community",color:"#15803d",bg:"#f0fdf4",cat:"Plateforme réseau 360° 🇫🇷",desc:"Plateforme interne Yes Conciergerie couvrant les 4 acteurs du réseau en une seule interface. Deux vues distinctes : vue Franchiseur (pilotage réseau, CRM candidats, royalties, trésorerie, droits d'entrée) et vue Franchisé — Yes Cockpit (logements, CRM propriétaires, finances, PMS, incidents, stocks, ménage). Aucun équivalent sur le marché.",points:["Vue Franchiseur : Projets, Dashboard (Royalties, Trésorerie, Paiements, Droits d'entrée), CRM (Candidats, Franchisés, Démarrages)","Vue Franchisé Cockpit : Dashboard, Logements, CRM, Finances, PMS","Opérationnel terrain : Incidents, Stocks, Ménage, Calendrier","Documents & outils : Médiathèque, Cartes de visite, Documents","Réseau Yes : Messagerie réseau, Annuaire, Yes Academy, Faire une demande","Génération de devis propriétaires (pas de facturation directe)"]},
 ];
 
 function renderOutilsDesc(){
@@ -648,7 +655,7 @@ function renderOutilsDesc(){
 }
 
 /* ── SIMULATOR STATE ── */
-let simBiens=10, simFr=1, simMode='franchisee';
+let simBiens=10, simFr=1, simMode='franchisee', simYesPrice=199;
 const USD=0.93;
 
 function calcToolPrice(name, nb){
@@ -671,7 +678,7 @@ function calcToolPrice(name, nb){
       const hf=(nb<=4?129:219)*USD;
       return Math.round(s+b+pl+hf+45+45+40);
     }
-    case 'Yes Outil Interne ★': return 199;
+    case 'Yes Outil Interne ★': return simYesPrice;
     default: return 0;
   }
 }
@@ -705,6 +712,7 @@ function setSimMode(mode){
 function updateSim(){
   simBiens=parseInt(document.getElementById('sim-biens').value);
   simFr=parseInt(document.getElementById('sim-fr').value);
+  simYesPrice=parseInt(document.getElementById('sim-yes-price').value)||199;
   document.getElementById('sim-biens-val').textContent=simBiens;
   document.getElementById('sim-fr-val').textContent=simFr;
   renderPricingDynamic();
@@ -723,7 +731,7 @@ function renderPricingDynamic(){
     {label:'Yes Outil Interne ★',val:yesP.toLocaleString('fr-FR')+' €',sub:unit,col:'#4ade80'},
     {label:'Stack DIY ×7',val:stackP.toLocaleString('fr-FR')+' €',sub:unit,col:'#f87171'},
     {label:'Économie vs Stack',val:eco.toLocaleString('fr-FR')+' €',sub:'soit '+(Math.round(eco/yesP*100))+'% moins cher',col:'#818cf8'},
-    {label:simMode==='reseau'?'MRR réseau Yes':'Meilleure alternative marché',val:simMode==='reseau'?(199*simFr).toLocaleString('fr-FR')+' €':bestAlt.toLocaleString('fr-FR')+' €',sub:simMode==='reseau'?simFr+' franchisés × 199€':'(Superhote / Smoobu / Amenitiz)',col:'#fb923c'},
+    {label:simMode==='reseau'?'MRR réseau Yes':'Meilleure alternative marché',val:simMode==='reseau'?(simYesPrice*simFr).toLocaleString('fr-FR')+' €':bestAlt.toLocaleString('fr-FR')+' €',sub:simMode==='reseau'?simFr+' franchisés × '+simYesPrice+'€':'(Superhote / Smoobu / Amenitiz)',col:'#fb923c'},
   ];
   document.getElementById('sim-kpis').innerHTML=kpis.map(k=>`
     <div class="sim-kpi">
@@ -782,7 +790,7 @@ function renderPricingDynamic(){
 
   /* VERDICT */
   const stackTot=calcToolPrice('Stack DIY ×7',simBiens)*mult;
-  const yesTot=199*mult;
+  const yesTot=simYesPrice*mult;
   const saving=stackTot-yesTot;
   document.getElementById('sim-verdict').innerHTML=`
     <strong>Simulation : ${simBiens} logement${simBiens>1?'s':''} / franchisé · ${simFr} franchisé${simFr>1?'s':''} · vue ${simMode==='reseau'?'réseau complet':'par franchisé'}</strong><br>
