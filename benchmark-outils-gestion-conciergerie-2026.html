@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark Outils IA & Gestion Conciergerie 2026 — Yes Conciergerie</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.wrap{max-width:1140px;margin:0 auto;padding:1rem}
+.hdr{background:linear-gradient(135deg,#0f172a,#1e3a8a,#4338ca);color:#fff;padding:1.3rem 1.5rem;border-radius:12px 12px 0 0}
+.hdr h1{font-size:16px;font-weight:700;margin-bottom:4px}
+.hdr p{font-size:11.5px;opacity:.8}
+.badge{display:inline-block;margin-top:.5rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:2px 12px;font-size:10px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:1.2rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e2e8f0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:.55rem .8rem;font-size:11px;cursor:pointer;color:#64748b;border:none;background:none;border-bottom:2.5px solid transparent;transition:.15s;white-space:nowrap}
+.tab.active{color:#4338ca;border-bottom-color:#4338ca;font-weight:600}
+.tab:hover:not(.active){background:#f8fafc}
+.pane{display:none;padding:1rem}
+.pane.active{display:block}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1rem}
+.kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.7rem .9rem}
+.kpi .lbl{font-size:9.5px;color:#64748b;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+.kpi .val{font-size:19px;font-weight:700;color:#4338ca}
+.kpi .sub{font-size:9.5px;color:#94a3b8;margin-top:2px}
+
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+@media(max-width:700px){.chart-grid{grid-template-columns:1fr}}
+.chart-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.85rem 1rem}
+.chart-card h3{font-size:10px;font-weight:600;color:#64748b;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.04em}
+.bar-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px}
+.bar-lbl{width:110px;flex-shrink:0;color:#475569;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}
+.bar-track{flex:1;background:#f1f5f9;border-radius:99px;height:9px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px}
+.bar-val{width:60px;font-size:9.5px;font-weight:600;color:#334155;text-align:left}
+
+/* TABLES */
+.tbl-wrap{overflow:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e2e8f0;max-height:480px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead th{background:#0f172a;color:#fff;padding:7px 9px;text-align:left;white-space:nowrap;position:sticky;top:0;font-weight:500;font-size:10px}
+tbody tr{border-bottom:1px solid #f1f5f9}
+tbody tr:hover{background:#f8fafc}
+tbody tr.yes-row td{background:#eef2ff;font-weight:600}
+tbody td{padding:6px 9px;vertical-align:middle;color:#334155;font-size:10.5px}
+.tag{display:inline-block;border-radius:99px;padding:2px 7px;font-size:9px;font-weight:600;white-space:nowrap}
+.t-yes{background:#e0e7ff;color:#3730a3}
+.t-non{background:#fee2e2;color:#991b1b}
+.t-par{background:#fef3c7;color:#92400e}
+.t-pms{background:#d1fae5;color:#065f46}
+.t-ia{background:#fdf4ff;color:#7e22ce}
+
+/* WARN */
+.warn{background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:.55rem .8rem;font-size:11px;color:#92400e;margin-bottom:.75rem;display:flex;gap:6px;align-items:flex-start}
+
+/* MODULE COVERAGE */
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin-bottom:1rem}
+.module-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.75rem .9rem}
+.module-card .mtitle{font-size:11px;font-weight:600;margin-bottom:.4rem;color:#1e293b}
+.module-card .msub{font-size:10px;color:#64748b;margin-bottom:.4rem}
+.coverage-bar{height:7px;border-radius:99px;background:#f1f5f9;margin-bottom:.3rem;overflow:hidden}
+.coverage-fill{height:100%;border-radius:99px}
+.tool-pills{display:flex;flex-wrap:wrap;gap:3px}
+.pill{display:inline-block;padding:1px 6px;border-radius:99px;font-size:9px;font-weight:600}
+.pill-yes{background:#e0e7ff;color:#3730a3}
+.pill-other{background:#f1f5f9;color:#64748b}
+.pill-no{background:#fee2e2;color:#991b1b}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1rem}
+.price-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:.9rem 1rem;position:relative}
+.price-card.featured{border-color:#4338ca;border-width:2px;background:#eef2ff}
+.price-card .ptool{font-size:12px;font-weight:700;margin-bottom:.3rem;color:#1e293b}
+.price-card .ptype{font-size:10px;color:#64748b;margin-bottom:.7rem}
+.price-card .pamt{font-size:22px;font-weight:700;color:#4338ca;margin-bottom:2px}
+.price-card .punit{font-size:10px;color:#64748b}
+.price-card .pbadge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#4338ca;color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.price-card .pincl{margin-top:.7rem;border-top:1px solid #e2e8f0;padding-top:.6rem}
+.price-card .prow{display:flex;align-items:center;gap:5px;font-size:10px;color:#334155;padding:2px 0}
+.price-card .prow .pi{color:#059669;font-size:12px}
+.price-card .prow .px{color:#dc2626;font-size:12px}
+
+/* VERDICT */
+.verdict-box{background:linear-gradient(135deg,#1e3a8a,#4338ca);color:#fff;border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:1rem;font-size:11.5px;line-height:1.9}
+.verdict-box strong{color:#a5b4fc}
+.verdict-green{background:linear-gradient(135deg,#14532d,#15803d);color:#fff}
+.verdict-green strong{color:#86efac}
+
+/* SIMULATOR */
+.sim-panel{background:linear-gradient(135deg,#0f172a,#1e3a8a);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1rem;color:#fff}
+.sim-row{display:flex;gap:1.4rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.9rem}
+.sim-ctrl{flex:1;min-width:160px}
+.sim-ctrl-toggle{flex:0 0 auto}
+.sim-label{font-size:10px;font-weight:600;color:#94a3b8;margin-bottom:.4rem;display:flex;align-items:center;gap:5px}
+.sim-slider-row{display:flex;align-items:center;gap:.6rem}
+.sim-slider-row input[type=range]{flex:1;accent-color:#818cf8;height:4px;cursor:pointer}
+.sim-val{font-size:20px;font-weight:800;color:#818cf8;min-width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.sim-toggle{display:flex;gap:4px}
+.stog{padding:5px 12px;border-radius:8px;border:1px solid #334155;background:transparent;color:#94a3b8;font-size:10.5px;font-weight:600;cursor:pointer;transition:.2s}
+.stog:hover{border-color:#818cf8;color:#e0e7ff}
+.stog-active{background:#4338ca;border-color:#4338ca;color:#fff}
+.sim-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem}
+.sim-kpi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.6rem .8rem}
+.sim-kpi-label{font-size:9.5px;color:#94a3b8;margin-bottom:2px}
+.sim-kpi-val{font-size:16px;font-weight:800;font-variant-numeric:tabular-nums}
+.sim-kpi-sub{font-size:9px;color:#64748b;margin-top:1px}
+.sim-bar-row{display:flex;align-items:center;gap:8px}
+.sim-bar-lbl{font-size:10px;color:#334155;min-width:120px;max-width:120px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sim-bar-track{flex:1;background:#e2e8f0;border-radius:4px;height:18px;overflow:hidden;position:relative}
+.sim-bar-fill{height:100%;border-radius:4px;transition:width .4s ease;display:flex;align-items:center;padding-left:6px}
+.sim-bar-amt{font-size:9.5px;font-weight:700;color:#fff;white-space:nowrap}
+.sim-bar-amt-out{font-size:10px;font-weight:700;color:#1e293b;margin-left:5px;white-space:nowrap}
+
+/* COMPARISON TABLE FEATURE */
+.feat-tbl{width:100%;border-collapse:collapse;font-size:10.5px;min-width:900px}
+.feat-tbl th{background:#0f172a;color:#fff;padding:7px 9px;text-align:center;font-weight:500;font-size:10px;position:sticky;top:0;white-space:nowrap}
+.feat-tbl th:first-child{text-align:left;min-width:180px}
+.feat-tbl td{padding:6px 9px;border-bottom:1px solid #f1f5f9;text-align:center;vertical-align:middle}
+.feat-tbl td:first-child{text-align:left;font-weight:500;color:#334155;background:#f8fafc}
+.feat-tbl tr:hover td{background:#f8fafc}
+.feat-tbl tr.yes-row td{background:#eef2ff}
+.feat-tbl tr.yes-row td:first-child{background:#e0e7ff;color:#3730a3;font-weight:700}
+.feat-tbl tr.section-hdr td{background:#1e3a8a;color:#93c5fd;font-weight:700;font-size:10px;letter-spacing:.05em;text-align:left;padding:6px 9px}
+.chk-yes{color:#059669;font-size:15px}
+.chk-par{color:#d97706;font-size:14px}
+.chk-no{color:#dc2626;font-size:14px}
+
+/* SCORING */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1rem}
+.score-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:.9rem 1rem}
+.score-card.yes-sc{border-color:#4338ca;border-width:2px;background:#eef2ff}
+.score-card .stool{font-size:12px;font-weight:700;margin-bottom:6px}
+.score-card .sscore{font-size:28px;font-weight:700;color:#4338ca}
+.score-card .smax{font-size:11px;color:#94a3b8}
+.score-bar{height:8px;border-radius:99px;background:#f1f5f9;overflow:hidden;margin:6px 0}
+.score-fill{height:100%;border-radius:99px;background:#4338ca}
+.score-card .scats{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;margin-top:6px}
+.score-card .scat{display:flex;justify-content:space-between;color:#64748b}
+.score-card .scat span:last-child{font-weight:600;color:#334155}
+
+/* RECOMMANDATION */
+.reco-section{background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem}
+.reco-section h3{font-size:13px;font-weight:700;color:#15803d;margin-bottom:.5rem}
+.reco-section p{font-size:11px;color:#1e293b;line-height:1.8}
+.pricing-scenarios{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:1rem 0}
+.scenario{border-radius:10px;padding:.9rem 1rem;border:1px solid}
+.scenario.s1{background:#f0f9ff;border-color:#bae6fd}
+.scenario.s2{background:#f0fdf4;border-color:#86efac}
+.scenario.s3{background:#fdf4ff;border-color:#e9d5ff}
+.scenario .s-title{font-size:11px;font-weight:700;margin-bottom:.3rem}
+.scenario.s1 .s-title{color:#0369a1}
+.scenario.s2 .s-title{color:#15803d}
+.scenario.s3 .s-title{color:#7e22ce}
+.scenario .s-price{font-size:22px;font-weight:700;margin-bottom:2px}
+.scenario.s1 .s-price{color:#0369a1}
+.scenario.s2 .s-price{color:#15803d}
+.scenario.s3 .s-price{color:#7e22ce}
+.scenario .s-unit{font-size:10px;color:#64748b;margin-bottom:.5rem}
+.scenario .s-note{font-size:10.5px;color:#334155;line-height:1.6}
+
+@media(max-width:600px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:1fr}
+  .score-grid{grid-template-columns:1fr}
+  .pricing-scenarios{grid-template-columns:1fr}
+  .pane{padding:.7rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+  <div class="hdr">
+    <h1>Benchmark Outils IA & Gestion Conciergerie 2026 — Yes Conciergerie</h1>
+    <p>Comparatif SaaS & plateformes de gestion · Positionnement de l'outil interne Yes · Recommandation tarifaire</p>
+    <div class="badge">Marché 2025–2026 · 13 outils analysés · 22 modules évalués</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('synthese',this)"><i class="ti ti-chart-bar"></i> Synthèse</button>
+    <button class="tab" onclick="showTab('comparatif',this)"><i class="ti ti-table"></i> Comparatif modules</button>
+    <button class="tab" onclick="showTab('scoring',this)"><i class="ti ti-trophy"></i> Scoring</button>
+    <button class="tab" onclick="showTab('pricing',this)"><i class="ti ti-currency-euro"></i> Pricing marché</button>
+    <button class="tab" onclick="showTab('outils-desc',this)"><i class="ti ti-info-circle"></i> À quoi servent ces outils ?</button>
+    <button class="tab" onclick="showTab('reco',this)" style="color:#15803d;font-weight:600"><i class="ti ti-bulb"></i> Recommandation ★</button>
+  </div>
+
+  <!-- SYNTHÈSE -->
+  <div class="pane active" id="pane-synthese">
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Outils analysés</div><div class="val">9</div><div class="sub">SaaS + stack combiné</div></div>
+      <div class="kpi"><div class="lbl">Modules Yes</div><div class="val">22</div><div class="sub">4 acteurs couverts</div></div>
+      <div class="kpi"><div class="lbl">Couverture moy. marché</div><div class="val">38%</div><div class="sub">8,4 / 22 modules</div></div>
+      <div class="kpi"><div class="lbl">Coût stack complet</div><div class="val">~650€</div><div class="sub">/mois sans Yes</div></div>
+      <div class="kpi"><div class="lbl">Économie Yes</div><div class="val">-72%</div><div class="sub">vs stack marché</div></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card"><h3>Modules couverts / 22 (par outil)</h3><div id="ch-modules"></div></div>
+      <div class="chart-card"><h3>Tarif mensuel indicatif (20 biens)</h3><div id="ch-prix"></div></div>
+      <div class="chart-card"><h3>Couverture par domaine fonctionnel</h3><div id="ch-domaine"></div></div>
+      <div class="chart-card"><h3>Score global / 100</h3><div id="ch-score"></div></div>
+    </div>
+
+    <div class="warn"><i class="ti ti-alert-triangle"></i> Aucun outil du marché ne couvre les 22 modules du cahier des charges Yes Conciergerie. Un franchisé devrait combiner 5 à 7 outils pour en approcher la couverture, pour un coût mensuel estimé à 500–800 €HT.</div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Outil</th><th>Type</th><th>Origine</th><th>Modules / 22</th><th>Score / 100</th><th>Tarif indicatif</th><th>Franchise réseau ?</th><th>IA intégrée ?</th><th>Multi-acteurs ?</th><th>Positionnement</th></tr></thead>
+        <tbody id="syn-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- COMPARATIF MODULES -->
+  <div class="pane" id="pane-comparatif">
+    <div class="warn"><i class="ti ti-info-circle"></i> ✅ Natif &nbsp;|&nbsp; 🟡 Partiel / via intégration &nbsp;|&nbsp; ❌ Absent. Évaluation basée sur les fonctionnalités publiques 2025–2026.</div>
+    <div class="tbl-wrap">
+      <table class="feat-tbl" id="feat-table"></table>
+    </div>
+  </div>
+
+  <!-- SCORING -->
+  <div class="pane" id="pane-scoring">
+    <p style="font-size:11px;color:#64748b;margin-bottom:1rem">Score sur 100 pondéré : Franchise réseau 25 % · PMS & opérations 20 % · CRM & acquisition 15 % · Finances & facturation 15 % · IA & automatisation 15 % · Expérience propriétaire & voyageur 10 %</p>
+    <div class="score-grid" id="score-grid"></div>
+    <div class="verdict-box">
+      <strong>Lecture :</strong> Aucun outil n'atteint 50/100 sur la grille de notation Yes Conciergerie. Biloki est le plus proche (43/100) mais reste limité sur la gestion réseau, l'IA et l'académie. Superhote excelle sur le PMS mais ignore totalement la dimension franchiseur. Guesty est puissant mais surdimensionné et non francisé pour le marché conciergerie. <strong>L'outil Yes Conciergerie est la seule solution à couvrir les 4 acteurs simultanément (Franchiseur · Franchisé · Propriétaire · Voyageur)</strong> — ce qui justifie un positionnement tarifaire premium.
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="pane" id="pane-pricing">
+
+    <!-- SIMULATEUR -->
+    <div class="sim-panel">
+      <div class="sim-row">
+        <div class="sim-ctrl">
+          <div class="sim-label"><i class="ti ti-home"></i> Logements par franchisé</div>
+          <div class="sim-slider-row">
+            <input type="range" min="1" max="50" value="10" id="sim-biens" oninput="updateSim()">
+            <span class="sim-val" id="sim-biens-val">10</span>
+          </div>
+        </div>
+        <div class="sim-ctrl">
+          <div class="sim-label"><i class="ti ti-users"></i> Franchisés dans le réseau</div>
+          <div class="sim-slider-row">
+            <input type="range" min="1" max="50" value="1" id="sim-fr" oninput="updateSim()">
+            <span class="sim-val" id="sim-fr-val">1</span>
+          </div>
+        </div>
+        <div class="sim-ctrl sim-ctrl-toggle">
+          <div class="sim-label"><i class="ti ti-layout-columns"></i> Vue</div>
+          <div class="sim-toggle">
+            <button id="btn-par-fr" class="stog stog-active" onclick="setSimMode('franchisee')">Par franchisé</button>
+            <button id="btn-reseau" class="stog" onclick="setSimMode('reseau')">Réseau complet</button>
+          </div>
+        </div>
+      </div>
+      <div class="sim-kpis" id="sim-kpis"></div>
+    </div>
+
+    <!-- GRAPHIQUE COMPARATIF -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
+      <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:.6rem">Comparaison tarifaire — toutes solutions (€HT/mois)</div>
+      <div id="sim-chart" style="display:flex;flex-direction:column;gap:5px"></div>
+      <div style="font-size:9px;color:#94a3b8;margin-top:.5rem">* Tarifs calculés selon grilles officielles 2025-2026. USD converti à 0,93 €. Biloki et Octoplus estimés (pas de grille publique détaillée).</div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="pricing-grid" id="pricing-grid"></div>
+
+    <!-- STACK TABLE -->
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem">
+      <div style="font-size:11px;font-weight:700;color:#1e293b;margin-bottom:.5rem">Décomposition du Stack DIY — coût mensuel calculé</div>
+      <div class="tbl-wrap" style="max-height:none">
+        <table>
+          <thead><tr><th>Outil</th><th>Fonction</th><th>Coût calculé / mois</th><th>Module Yes couvert</th></tr></thead>
+          <tbody id="stack-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="verdict-box" id="sim-verdict"></div>
+
+    <div style="font-size:9px;color:#94a3b8;margin-top:.5rem">Sources : smoobu.com · superhote.com · amenitiz.com · guesty.com · lodgify.com · hostaway.com · hostfully.com · breezeway.io · jurny.com · pricelabs.co — mai 2026.</div>
+  </div>
+
+  <!-- À QUOI SERVENT CES OUTILS -->
+  <div class="pane" id="pane-outils-desc">
+    <div class="warn"><i class="ti ti-info-circle"></i> <strong>Qu'est-ce que le "Stack DIY" ?</strong> Aucun outil du marché ne couvre les 22 modules Yes. Un franchisé sans votre plateforme devrait assembler lui-même 7 outils séparés (Superhote + Biloki + PriceLabs + Hostfully + Pipedrive + Tiime + Notion/Teachable). C'est ce qu'on appelle le "Stack DIY" — des silos non intégrés, avec des doubles-saisies et un coût global de 520–790 €/mois.</div>
+    <div id="outils-desc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
+  </div>
+
+  <!-- RECOMMANDATION -->
+  <div class="pane" id="pane-reco">
+    <div class="reco-section">
+      <h3><i class="ti ti-bulb"></i> Positionnement tarifaire recommandé — Outil de Gestion Yes Conciergerie</h3>
+      <p>L'outil Yes couvre <strong>22 modules</strong> vs 8 en moyenne pour les outils du marché. Il est le seul à intégrer franchiseur + franchisé + propriétaire + voyageur dans une seule plateforme. Le marché facture 520–790 €/mois pour une couverture partielle. L'outil Yes doit être positionné comme <strong>une économie nette pour le franchisé</strong>, pas comme une charge supplémentaire.</p>
+    </div>
+
+    <div class="pricing-scenarios">
+      <div class="scenario s1">
+        <div class="s-title">Scénario A — Inclus royalties</div>
+        <div class="s-price">0 €</div>
+        <div class="s-unit">facturation séparée / mois</div>
+        <div class="s-note">L'outil est intégré dans les 6 % de redevance réseau. Argument commercial fort : "tout compris". Risque : perception que les royalties sont élevées si l'outil n'est pas valorisé explicitement.</div>
+      </div>
+      <div class="scenario s2">
+        <div class="s-title">Scénario B — SaaS séparé ★</div>
+        <div class="s-price">180–250 €</div>
+        <div class="s-unit">HT / mois / franchisé</div>
+        <div class="s-note">Ligne distincte dans le contrat. Positionné comme économie vs marché (650 €/mois économisés). Revenu récurrent visible pour le franchiseur. Recommandé : 199 €HT/mois an 1, 249 €HT/mois an 2+.</div>
+      </div>
+      <div class="scenario s3">
+        <div class="s-title">Scénario C — Modulaire</div>
+        <div class="s-price">99–350 €</div>
+        <div class="s-unit">HT / mois selon modules</div>
+        <div class="s-note">Socle PMS + portail à 99 €/mois. Options IA, Academy, multi-devises en supplément. Flexible mais complexifie la grille tarifaire. Recommandé uniquement si ouverture à des clients hors réseau.</div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:1rem">
+      <div style="background:#0f172a;color:#fff;padding:.7rem 1rem;font-size:11.5px;font-weight:700">Argumentation commerciale — valeur justifiée</div>
+      <div style="padding:.9rem 1rem">
+        <div class="tbl-wrap" style="max-height:none">
+          <table>
+            <thead><tr><th>Ce que l'outil remplace</th><th>Coût marché / mois</th><th>Couverture Yes</th><th>Économie annuelle</th></tr></thead>
+            <tbody id="value-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict-box verdict-green">
+      <strong>Recommandation finale :</strong> Opter pour le <strong>Scénario B à 199 €HT/mois an 1 / 249 €HT/mois an 2+</strong>. C'est 3× moins cher que le stack de remplacement (650 €/mois), positionnable comme "économie nette de 450–600 €/mois dès le premier mois". Sur 20 franchisés : <strong>47 760 à 59 760 €HT/an de revenu SaaS récurrent</strong> pour le réseau, indépendamment des royalties CA. Ce revenu finance le développement et la maintenance de la plateforme. Prévoir une clause de révision annuelle (indexation +5% max) dans le contrat.
+    </div>
+  </div>
+
+</div><!-- /card -->
+</div><!-- /wrap -->
+
+<script>
+const outils=[
+  {n:"Biloki",type:"Conciergerie SaaS",origine:"🇫🇷 France",modules:12,score:43,tarif:"99–299",franchise:false,ia:true,multi:false,pos:"Outil SaaS français spécialisé conciergerie locative. PMS + portail propriétaire + facturation. L'un des plus proches du besoin Yes sur le marché FR."},
+  {n:"Octoplus",type:"Conciergerie SaaS",origine:"🇫🇷 France",modules:13,score:41,tarif:"99–249",franchise:false,ia:false,multi:false,pos:"Solution française pour gérants de biens en location courte durée. Fort sur CRM propriétaires, devis, facturation et planning opérationnel."},
+  {n:"Superhote",type:"PMS vacation rental",origine:"🇫🇷 France",modules:9,score:35,tarif:"57–200",franchise:false,ia:false,multi:false,pos:"PMS français robuste et populaire dans la conciergerie. Channel manager, messaging voyageur automatisé, facturation propriétaires. Pas de dimension franchiseur."},
+  {n:"Amenitiz",type:"PMS + direct booking",origine:"🇫🇷 France",modules:10,score:31,tarif:"42–200",franchise:false,ia:false,multi:false,pos:"Startup française en croissance rapide. PMS + site direct booking intégré + channel manager. Pensé pour les indépendants et petits réseaux. Pas de gestion réseau."},
+  {n:"Guesty",type:"PMS enterprise",origine:"🇮🇱 Israël / US",modules:10,score:38,tarif:"150–600",franchise:false,ia:true,multi:false,pos:"Référence enterprise mondiale du PMS vacation rental. Très puissant sur les intégrations et l'owner portal. Lite à partir de $16/bien/mois, Pro sur devis."},
+  {n:"Hostaway",type:"PMS + channel mgr",origine:"🇫🇮 Finland",modules:8,score:30,tarif:"150–400",franchise:false,ia:false,multi:false,pos:"Channel manager fiable avec PMS intégré. Bon rapport qualité/prix pour les gestionnaires >20 biens. Limité sur la partie finance et propriétaires. Tarif sur devis."},
+  {n:"Smoobu",type:"PMS entrée de gamme",origine:"🇩🇪 Allemagne",modules:7,score:25,tarif:"35–200",franchise:false,ia:false,multi:false,pos:"Solution économique et simple pour démarrer. Professional Flex à €29/mois (1 bien), Teams Pro+ à €55 + €9,60/bien suppl. Idéal pour un indépendant, insuffisant pour un franchisé Yes."},
+  {n:"Lodgify",type:"PMS + direct booking",origine:"🇪🇸 Espagne",modules:7,score:26,tarif:"130–590",franchise:false,ia:false,multi:false,pos:"Tarification par bien ($16–59/bien/mois). Fort sur la réservation directe et le channel manager. PMS limité. Pour 10 biens en plan Professional : $400/mois. Pas de gestion réseau."},
+  {n:"Hostfully",type:"Guidebooks + PMS",origine:"🇺🇸 USA",modules:6,score:22,tarif:"129–300",franchise:false,ia:false,multi:false,pos:"La référence internationale des livrets voyageur digitaux. Starter $129/mois pour 4 biens, Pro $219/mois pour 10 biens. Pas de gestion réseau, CRM, finance ni franchise."},
+  {n:"Breezeway",type:"Ops & maintenance",origine:"🇺🇸 USA",modules:7,score:19,tarif:"150–350",franchise:false,ia:true,multi:false,pos:"Plateforme opérationnelle dédiée au ménage, aux inspections et à la maintenance. $19,99/bien/mois. Pour 10 biens ≈ €185/mois. Pas de PMS ni de gestion financière."},
+  {n:"Jurny",type:"PMS IA-first",origine:"🇺🇸 USA",modules:14,score:38,tarif:"370–600",franchise:false,ia:true,multi:false,pos:"PMS IA-first avec minimum de facturation $400/mois. Suite complète ($19+$29+$14/bien). Innovant mais peu implanté en France. Pas de gestion réseau franchise."},
+  {n:"Stack DIY ×7",type:"7 outils assemblés",origine:"Multi",modules:16,score:48,tarif:"400–900",franchise:false,ia:true,multi:true,pos:"Concept : ce qu'un franchisé devrait assembler sans Yes — Superhote + Biloki + PriceLabs + Hostfully + Pipedrive + Tiime + Teachable. Coût élevé, silos non intégrés, doubles-saisies.",stack:true},
+  {n:"Yes Outil Interne ★",type:"Plateforme réseau 360°",origine:"🇫🇷 Yes Conciergerie",modules:22,score:100,tarif:"199–249",franchise:true,ia:true,multi:true,pos:"22 modules · 4 acteurs (Franchiseur · Franchisé · Propriétaire · Voyageur) · Franchise + PMS + IA + Academy + Conformité. Aucun équivalent sur le marché.",yes:true},
+];
+
+const modules22=[
+  {cat:"Franchiseur",items:[
+    {m:"CRM candidats franchisés",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Gestion contrats & DIP",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Facturation royalties réseau",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Dashboard & benchmarking réseau",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+  ]},
+  {cat:"Franchisé — CRM & commercial",items:[
+    {m:"CRM propriétaires",tools:{Biloki:2,Octoplus:2,Superhote:1,Amenitiz:1,Guesty:1,Hostaway:1,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Simulateur revenus propriétaire",tools:{Biloki:1,Octoplus:1,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Devis & contrat de gestion",tools:{Biloki:2,Octoplus:2,Superhote:1,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+  ]},
+  {cat:"Franchisé — Opérations (PMS)",items:[
+    {m:"Planning & channel manager",tools:{Biloki:2,Octoplus:2,Superhote:2,Amenitiz:2,Guesty:2,Hostaway:2,Smoobu:2,Lodgify:2,Hostfully:2,Breezeway:1,Jurny:2,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Check-in / check-out & ménage",tools:{Biloki:2,Octoplus:2,Superhote:2,Amenitiz:1,Guesty:2,Hostaway:1,Smoobu:1,Lodgify:1,Hostfully:1,Breezeway:2,Jurny:2,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Tarification dynamique",tools:{Biloki:1,Octoplus:1,Superhote:1,Amenitiz:1,Guesty:2,Hostaway:1,Smoobu:1,Lodgify:1,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Incidents & maintenance",tools:{Biloki:1,Octoplus:1,Superhote:0,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:2,Jurny:1,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Stocks & consommables",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:2,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+  ]},
+  {cat:"Franchisé — Finance",items:[
+    {m:"Pilotage financier & marges",tools:{Biloki:1,Octoplus:1,Superhote:1,Amenitiz:1,Guesty:1,Hostaway:1,Smoobu:1,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Facturation propriétaires",tools:{Biloki:2,Octoplus:2,Superhote:2,Amenitiz:1,Guesty:2,Hostaway:1,Smoobu:1,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Comptabilité multi-pays / devises",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+  ]},
+  {cat:"Propriétaire & Voyageur",items:[
+    {m:"Portail propriétaire & reporting",tools:{Biloki:2,Octoplus:1,Superhote:1,Amenitiz:1,Guesty:2,Hostaway:1,Smoobu:1,Lodgify:1,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Attestation fiscale annuelle",tools:{Biloki:1,Octoplus:1,Superhote:1,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Livret voyageur digital multilingue",tools:{Biloki:1,Octoplus:1,Superhote:1,Amenitiz:1,Guesty:1,Hostaway:1,Smoobu:0,Lodgify:1,Hostfully:2,Breezeway:1,Jurny:2,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Messages automatiques voyageur",tools:{Biloki:2,Octoplus:2,Superhote:2,Amenitiz:2,Guesty:2,Hostaway:2,Smoobu:2,Lodgify:1,Hostfully:1,Breezeway:1,Jurny:2,"Stack DIY ×7":2,"Yes Outil Interne ★":2}},
+    {m:"Upsell extras & excursions",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:1,Breezeway:0,Jurny:1,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+  ]},
+  {cat:"Communs & transversaux",items:[
+    {m:"Conformité réglementaire LCD",tools:{Biloki:1,Octoplus:1,Superhote:1,Amenitiz:1,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Yes Academy / LMS formation",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:0,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:0,Jurny:0,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Assistants IA contextuels",tools:{Biloki:1,Octoplus:0,Superhote:0,Amenitiz:0,Guesty:1,Hostaway:0,Smoobu:0,Lodgify:0,Hostfully:0,Breezeway:1,Jurny:2,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+    {m:"Direct Booking intégré",tools:{Biloki:0,Octoplus:0,Superhote:0,Amenitiz:2,Guesty:2,Hostaway:1,Smoobu:0,Lodgify:2,Hostfully:0,Breezeway:0,Jurny:1,"Stack DIY ×7":1,"Yes Outil Interne ★":2}},
+  ]},
+];
+
+const scores={
+  Biloki:{total:43,franchise:5,pms:15,crm:10,finance:7,ia:4,exp:7},
+  Octoplus:{total:41,franchise:4,pms:14,crm:11,finance:8,ia:0,exp:6},
+  Superhote:{total:35,franchise:0,pms:18,crm:7,finance:6,ia:0,exp:7},
+  Amenitiz:{total:31,franchise:0,pms:14,crm:5,finance:5,ia:0,exp:7},
+  Guesty:{total:38,franchise:2,pms:18,crm:8,finance:8,ia:5,exp:6},
+  Hostaway:{total:30,franchise:0,pms:15,crm:6,finance:5,ia:0,exp:6},
+  Smoobu:{total:25,franchise:0,pms:12,crm:3,finance:4,ia:0,exp:5},
+  Lodgify:{total:26,franchise:0,pms:12,crm:3,finance:3,ia:0,exp:7},
+  Hostfully:{total:22,franchise:0,pms:8,crm:2,finance:2,ia:0,exp:8},
+  Breezeway:{total:19,franchise:0,pms:10,crm:0,finance:0,ia:3,exp:6},
+  Jurny:{total:38,franchise:0,pms:15,crm:6,finance:5,ia:9,exp:8},
+  "Stack DIY ×7":{total:48,franchise:8,pms:18,crm:9,finance:9,ia:5,exp:9},
+  "Yes Outil Interne ★":{total:100,franchise:25,pms:20,crm:15,finance:15,ia:15,exp:10},
+};
+
+const pricing=[
+  {n:"Biloki",tarif:"99–299 €HT/mois",base:"~150 €/mois",prop:"Tarif par bien géré — calculateur sur biloki.fr",incl:["PMS & channel manager","Portail propriétaire","Facturation & relevés","CRM propriétaires","Support FR"],excl:["Gestion réseau franchise","IA avancée","Formation","Comptabilité multi-pays"]},
+  {n:"Octoplus",tarif:"99–249 €HT/mois",base:"~120 €/mois",prop:"Forfait selon nb de biens gérés",incl:["CRM propriétaires complet","Devis & contrats","PMS + planning","Facturation auto","Portail propriétaire basique"],excl:["Gestion franchise","IA","LMS","Multi-devises","Conformité LCD avancée"]},
+  {n:"Superhote",tarif:"57–200 €HT/mois",base:"~116 €/mois",prop:"€67/mois base (3 biens) + €7 HT par bien supplémentaire",incl:["PMS complet","Channel manager","Messagerie auto voyageur","Facturation propriétaires","Reporting"],excl:["Portail propriétaire avancé","CRM franchise","IA","LMS","Multi-devises"]},
+  {n:"Amenitiz",tarif:"42–200 €HT/mois",base:"~69 €/mois",prop:"Presence €42/mois · Sales Pro €69/mois · Ultimate+ sur devis",incl:["PMS","Channel manager","Site direct booking","Messagerie auto","Reporting basique"],excl:["Portail propriétaire","CRM franchise","IA","Formation","Finance avancée","Conformité"]},
+  {n:"Guesty",tarif:"150–600 €HT/mois",base:"~280 €/mois",prop:"Lite $16/bien/mois · Pro & Enterprise sur devis",incl:["PMS enterprise","Channel manager avancé","Owner portal","API robuste","IA basique","Multi-devises"],excl:["Gestion franchise","LMS","IA avancée","Conformité FR"]},
+  {n:"Hostaway",tarif:"150–400 €HT/mois",base:"~200 €/mois",prop:"Sur devis — $20–40/bien/mois selon volume",incl:["PMS fiable","Channel manager","Messagerie","Reporting","Direct booking"],excl:["Owner portal","CRM franchise","IA","Formation","Stocks","Incidents"]},
+  {n:"Smoobu",tarif:"35–200 €HT/mois",base:"~140 €/mois",prop:"Professional Flex €29/mois (1 bien) · Teams Pro+ €55 + €9,60/bien suppl.",incl:["PMS simple","Channel manager","iCal sync","Messagerie basique"],excl:["Owner portal","Facturation avancée","CRM","IA","Formation","Franchise"]},
+  {n:"Lodgify",tarif:"130–590 €HT/mois",base:"~300 €/mois",prop:"Par bien : Starter $16 · Professional $40 · Ultimate $59 (pour 10 biens : $160–590/mois)",incl:["PMS","Site web direct booking","Channel manager","Templates"],excl:["Owner portal","CRM","IA","Formation","Finance avancée"]},
+  {n:"Hostfully",tarif:"129–300 €HT/mois",base:"~200 €/mois",prop:"Starter $129/mois (4 biens) · Pro $219/mois (10 biens) · Pro Plus au-delà",incl:["Guidebooks digitaux","PMS basique","Messagerie","Channel manager","Upsell basique"],excl:["Owner portal","CRM","Facturation","IA","Formation","Finance"]},
+  {n:"Breezeway",tarif:"150–350 €HT/mois",base:"~185 €/mois",prop:"$19,99/bien/mois — réductions volume à partir de 5 biens",incl:["Planning ménage & inspections","Gestion incidents","Stocks consommables","App mobile prestataires","Rapports qualité"],excl:["PMS complet","CRM","Facturation","Finance","Franchise","Formation"]},
+  {n:"Jurny",tarif:"370–600 €HT/mois",base:"~400 €/mois",prop:"$400/mois minimum · jOS AI $19/bien + PMS $29/bien + Guest $14/bien",incl:["PMS IA-first","Livret voyageur IA","Upsell automatique","Messagerie adaptative","Check-in automatisé"],excl:["Gestion franchise","CRM franchise","Formation","Comptabilité","Conformité FR"]},
+  {n:"Yes Outil Interne ★",tarif:"199–249 €HT/mois",base:"199 €/mois an 1",prop:"SaaS franchisé — forfait tout compris, 22 modules, illimité en biens",incl:["22 modules complets","4 acteurs couverts","Yes Academy LMS","8 assistants IA","Comptabilité multi-pays","Conformité LCD","Support réseau dédié","Mises à jour incluses"],excl:[],yes:true},
+];
+
+const stack=[
+  {outil:"Superhote",fn:"PMS + channel manager",prix:"57–200 €",modules:"Module 10 (partiel)"},
+  {outil:"Biloki",fn:"CRM propriétaires + portail + facturation",prix:"99–250 €",modules:"Modules 7, 9, 13"},
+  {outil:"PriceLabs",fn:"Tarification dynamique ($19,99/bien/mois)",prix:"90–185 €",modules:"Module 10 (tarification)"},
+  {outil:"Hostfully",fn:"Livret voyageur digital",prix:"46–130 €",modules:"Module 14"},
+  {outil:"Pipedrive",fn:"CRM candidats franchisés",prix:"15–75 €",modules:"Module 3"},
+  {outil:"Tiime / Pennylane",fn:"Facturation & comptabilité",prix:"30–60 €",modules:"Modules 5, 9, 17"},
+  {outil:"Notion / Teachable",fn:"Formation réseau (LMS)",prix:"15–50 €",modules:"Module 20"},
+  {outil:"Claude / ChatGPT Pro",fn:"Assistants IA",prix:"20–40 €",modules:"Module 21"},
+  {outil:"TOTAL STACK",fn:"Couverture partielle (~16/22 modules)",prix:"<strong>400–900 €HT</strong>",modules:"<em>Silos, pas intégré</em>",total:true},
+];
+
+const valueArgs=[
+  {rep:"PMS + channel manager (Superhote)",cout:"57–200 €/mois",couv:"Module 10 complet + synchro temps réel",eco:"57–200 €/mois × 12"},
+  {rep:"Portail propriétaire + facturation (Biloki)",cout:"99–250 €/mois",couv:"Modules 9, 13, 17 — reporting, attestation fiscale",eco:"99–250 €/mois × 12"},
+  {rep:"Tarification dynamique (PriceLabs)",cout:"90–185 €/mois",couv:"Module 10 — $19,99/bien/mois, yield management",eco:"90–185 €/mois × 12"},
+  {rep:"Livret voyageur (Hostfully)",cout:"46–130 €/mois",couv:"Module 14 — multilangue, upsell, messages auto",eco:"46–130 €/mois × 12"},
+  {rep:"CRM franchise (Pipedrive)",cout:"15–75 €/mois",couv:"Modules 3, 4 — pipeline candidats, contrats, DIP",eco:"15–75 €/mois × 12"},
+  {rep:"Comptabilité (Tiime / Pennylane)",cout:"30–60 €/mois",couv:"Modules 5, 17 — royalties, multi-devises",eco:"30–60 €/mois × 12"},
+  {rep:"LMS formation (Teachable / Notion)",cout:"15–50 €/mois",couv:"Module 20 — Yes Academy, 9 domaines",eco:"15–50 €/mois × 12"},
+  {rep:"IA (Claude Pro / ChatGPT Pro)",cout:"20–40 €/mois",couv:"Module 21 — 8 assistants IA contextuels",eco:"20–40 €/mois × 12"},
+  {rep:"Gestion réseau franchise",cout:"Non disponible",couv:"Modules 1–6 — unique sur le marché",eco:"Valeur inestimable"},
+];
+
+function renderSyn(){
+  document.getElementById('syn-body').innerHTML=outils.map(o=>`
+    <tr${o.yes?' class="yes-row"':''}>
+      <td><strong>${o.n}</strong></td>
+      <td><span class="tag ${o.yes?'t-yes':o.type.includes('Stack')?'t-ia':o.type.includes('PMS')?'t-pms':'t-par'}">${o.type}</span></td>
+      <td>${o.origine}</td>
+      <td style="font-weight:700;color:${o.modules>=20?'#059669':o.modules>=12?'#1a56db':'#dc2626'}">${o.modules} / 22</td>
+      <td style="font-weight:700;color:${o.score>=90?'#059669':o.score>=40?'#1a56db':'#dc2626'}">${o.score} / 100</td>
+      <td>${o.tarif} €</td>
+      <td style="text-align:center">${o.franchise?'<span class="chk-yes">✅</span>':'<span class="chk-no">❌</span>'}</td>
+      <td style="text-align:center">${o.ia?'<span class="chk-yes">✅</span>':'<span class="chk-no">❌</span>'}</td>
+      <td style="text-align:center">${o.multi?'<span class="chk-yes">✅</span>':'<span class="chk-no">❌</span>'}</td>
+      <td style="font-size:10px;color:#64748b;max-width:200px">${o.pos}</td>
+    </tr>`).join('');
+}
+
+function renderCharts(){
+  const cols=['#4338ca','#7c3aed','#059669','#0369a1','#1a56db','#0891b2','#65a30d','#c2410c','#15803d','#be185d','#d97706','#64748b','#15803d'];
+  const modData=outils.map((o,i)=>({l:o.n,v:o.modules,c:cols[i%cols.length]})).sort((a,b)=>b.v-a.v);
+  const mx=22;
+  document.getElementById('ch-modules').innerHTML=modData.map(d=>`
+    <div class="bar-row">
+      <div class="bar-lbl">${d.l.length>14?d.l.slice(0,13)+'…':d.l}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(d.v/mx*100)}%;background:${d.c}"></div></div>
+      <div class="bar-val">${d.v}/22</div>
+    </div>`).join('');
+
+  const priceData=[
+    {l:"Amenitiz",v:69,c:'#0369a1'},{l:"Smoobu",v:140,c:'#65a30d'},{l:"Superhote",v:116,c:'#059669'},
+    {l:"Octoplus",v:120,c:'#7c3aed'},{l:"Biloki",v:150,c:'#4338ca'},{l:"Hostaway",v:200,c:'#64748b'},
+    {l:"Hostfully",v:200,c:'#0891b2'},{l:"Breezeway",v:185,c:'#d97706'},{l:"Guesty",v:280,c:'#991b1b'},
+    {l:"Lodgify",v:300,c:'#be185d'},{l:"Jurny",v:400,c:'#c2410c'},{l:"Stack DIY ×7",v:650,c:'#374151'},
+    {l:"Yes Outil ★",v:199,c:'#15803d'},
+  ].sort((a,b)=>b.v-a.v);
+  const pmx=Math.max(...priceData.map(d=>d.v));
+  document.getElementById('ch-prix').innerHTML=priceData.map(d=>`
+    <div class="bar-row">
+      <div class="bar-lbl">${d.l.length>14?d.l.slice(0,13)+'…':d.l}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(d.v/pmx*100)}%;background:${d.c}"></div></div>
+      <div class="bar-val">${d.v} €</div>
+    </div>`).join('');
+
+  const domaineData=[
+    {l:"PMS & planning",v:85,c:cols[1]},{l:"Messaging voyageur",v:78,c:cols[2]},
+    {l:"Facturation proprio",v:55,c:cols[3]},{l:"Portail propriétaire",v:48,c:cols[4]},
+    {l:"Tarification dyn.",v:45,c:cols[5]},{l:"CRM propriétaires",v:40,c:cols[6]},
+    {l:"Conformité LCD",v:28,c:cols[7]},{l:"IA assistants",v:22,c:cols[8]},
+    {l:"Gestion franchise",v:8,c:'#dc2626'},{l:"LMS / Formation",v:2,c:'#dc2626'},
+  ];
+  const dmx=100;
+  document.getElementById('ch-domaine').innerHTML=domaineData.map(d=>`
+    <div class="bar-row">
+      <div class="bar-lbl">${d.l}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.v}%;background:${d.c}"></div></div>
+      <div class="bar-val">${d.v}%</div>
+    </div>`).join('');
+
+  const scoreData=outils.map((o,i)=>({l:o.n,v:o.score,c:cols[i]})).sort((a,b)=>b.v-a.v);
+  document.getElementById('ch-score').innerHTML=scoreData.map(d=>`
+    <div class="bar-row">
+      <div class="bar-lbl">${d.l.length>14?d.l.slice(0,13)+'…':d.l}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.v}%;background:${d.c}"></div></div>
+      <div class="bar-val">${d.v}/100</div>
+    </div>`).join('');
+}
+
+function renderFeatTable(){
+  const toolNames=["Biloki","Octoplus","Superhote","Amenitiz","Guesty","Hostaway","Smoobu","Lodgify","Hostfully","Breezeway","Jurny","Stack DIY ×7","Yes Outil Interne ★"];
+  const shortNames={"Yes Outil Interne ★":"Yes ★","Stack DIY ×7":"Stack DIY","Breezeway":"Breezeway","Hostfully":"Hostfully"};
+  let html=`<thead><tr><th>Module</th>${toolNames.map(t=>`<th style="font-size:9px">${shortNames[t]||t}</th>`).join('')}</tr></thead><tbody>`;
+  modules22.forEach(cat=>{
+    html+=`<tr class="section-hdr"><td colspan="${toolNames.length+1}">▶ ${cat.cat.toUpperCase()}</td></tr>`;
+    cat.items.forEach(item=>{
+      const isYesOnly=item.tools["Yes Outil Interne ★"]===2&&toolNames.slice(0,-1).every(t=>item.tools[t]<2);
+      html+=`<tr${isYesOnly?' class="yes-row"':''}><td>${item.m}</td>${toolNames.map(t=>{const v=item.tools[t]||0;return`<td>${v===2?'<span class="chk-yes">✅</span>':v===1?'<span class="chk-par">🟡</span>':'<span class="chk-no">❌</span>'}</td>`;}).join('')}</tr>`;
+    });
+  });
+  html+='</tbody>';
+  document.getElementById('feat-table').innerHTML=html;
+}
+
+function renderScoring(){
+  const cats=[
+    {k:'franchise',l:'Franchise réseau',max:25},
+    {k:'pms',l:'PMS & opérations',max:20},
+    {k:'crm',l:'CRM & acquisition',max:15},
+    {k:'finance',l:'Finances',max:15},
+    {k:'ia',l:'IA & auto.',max:15},
+    {k:'exp',l:'Proprio & voyageur',max:10},
+  ];
+  const cols=['#4338ca','#7c3aed','#059669','#0369a1','#1a56db','#0891b2','#65a30d','#c2410c','#be185d','#d97706','#64748b','#374151','#15803d'];
+  document.getElementById('score-grid').innerHTML=outils.map((o,i)=>`
+    <div class="score-card${o.yes?' yes-sc':''}">
+      <div class="stool">${o.n}</div>
+      <div><span class="sscore">${scores[o.n]?.total||0}</span><span class="smax"> / 100</span></div>
+      <div class="score-bar"><div class="score-fill" style="width:${scores[o.n]?.total||0}%;background:${cols[i%cols.length]}"></div></div>
+      <div class="scats">${cats.map(c=>`<div class="scat"><span>${c.l}</span><span>${scores[o.n]?.[c.k]||0}/${c.max}</span></div>`).join('')}</div>
+    </div>`).join('');
+}
+
+const outilsDesc=[
+  {n:"Biloki",icon:"ti-tool",color:"#4338ca",bg:"#eef2ff",cat:"Conciergerie SaaS 🇫🇷",desc:"Outil SaaS français conçu spécifiquement pour les gestionnaires de conciergerie locative. Couvre le cycle complet propriétaire : CRM, devis, contrat de gestion, planning PMS, facturation automatique et portail propriétaire. L'un des plus adaptés au marché français.",points:["PMS + channel manager intégré","Portail propriétaire avec relevés mensuels","Facturation auto et attestation fiscale","CRM propriétaires avec pipeline","IA basique pour les descriptions"]},
+  {n:"Octoplus",icon:"ti-home",color:"#7c3aed",bg:"#fdf4ff",cat:"Conciergerie SaaS 🇫🇷",desc:"Solution française dédiée aux gestionnaires de location courte durée. Fort sur la relation propriétaire : simulation de revenus, devis personnalisés, contrats électroniques et facturation mensuelle automatisée. Planning opérationnel inclus.",points:["CRM propriétaires + simulateur revenus","Devis et contrats de gestion électroniques","Planning ménage et check-in/out","Facturation auto + relevés propriétaires","Reporting financier par logement"]},
+  {n:"Superhote",icon:"ti-calendar",color:"#059669",bg:"#f0fdf4",cat:"PMS vacation rental 🇫🇷",desc:"PMS français très populaire dans la conciergerie locative. Excellente couverture des opérations quotidiennes : synchronisation des calendriers, messagerie automatisée voyageurs, facturation propriétaires. Pas de dimension réseau ni franchise.",points:["PMS complet + channel manager","Messagerie voyageur automatisée (J-7, J-3, check-out)","Facturation propriétaires mensuelle","Reporting CA et taux d'occupation","Intégrations Airbnb, Booking, Vrbo"]},
+  {n:"Amenitiz",icon:"ti-world",color:"#0369a1",bg:"#f0f9ff",cat:"PMS + Direct Booking 🇫🇷",desc:"Startup française en forte croissance. Combine un PMS avec un générateur de site web de réservation directe. Pensé pour réduire la dépendance aux OTA (Airbnb, Booking). Simple à prendre en main, bien adapté aux indépendants et petits réseaux.",points:["PMS + channel manager","Site direct booking inclus","Messagerie automatisée voyageur","Reporting basique","Paiement Stripe intégré"]},
+  {n:"Guesty",icon:"ti-building-skyscraper",color:"#1a56db",bg:"#eff6ff",cat:"PMS Enterprise 🌍",desc:"Référence mondiale du PMS vacation rental, utilisé par les plus grands gestionnaires (500+ biens). Très puissant sur les intégrations, l'API, le channel manager et l'owner portal. Prix enterprise. Non francisé spécifiquement pour les PME conciergerie.",points:["PMS enterprise multi-sites","Channel manager 100+ plateformes","Owner portal avancé","API robuste pour intégrations","Multi-devises et multi-pays"]},
+  {n:"Hostaway",icon:"ti-layout-grid",color:"#0891b2",bg:"#ecfeff",cat:"PMS + Channel Manager 🇫🇮",desc:"Channel manager fiable avec PMS intégré. Bon rapport qualité/prix pour les gestionnaires de 20 à 100 biens. Messaging voyageur automatisé et reporting correct. Limité sur la partie financière propriétaire et sans aucune dimension réseau.",points:["Channel manager fiable (50+ plateformes)","PMS avec calendrier centralisé","Messagerie automatisée","Direct booking basique","Reporting CA par logement"]},
+  {n:"Smoobu",icon:"ti-home-2",color:"#65a30d",bg:"#f7fee7",cat:"PMS Entrée de gamme 🇩🇪",desc:"La solution la plus accessible du marché pour démarrer. Channel manager + iCal + messagerie basique. Idéal pour un gestionnaire indépendant de 5 à 20 biens. Trop limité pour les besoins d'un franchisé Yes Conciergerie.",points:["PMS simple et facile à prendre en main","Channel manager + synchronisation iCal","Messagerie basique voyageur","Tarif le plus bas du marché","Interface intuitive"]},
+  {n:"Lodgify",icon:"ti-browser",color:"#be185d",bg:"#fdf2f8",cat:"PMS + Direct Booking 🇪🇸",desc:"Spécialiste de la création de sites web de réservation directe pour les locations saisonnières. Channel manager intégré. PMS limité. Particulièrement adapté aux gestionnaires qui veulent réduire leur dépendance Airbnb/Booking avec leur propre site.",points:["Générateur de site web pro inclus","Channel manager","Paiement direct intégré","Messagerie basique","Templates personnalisables"]},
+  {n:"Hostfully",icon:"ti-book",color:"#0891b2",bg:"#ecfeff",cat:"Guidebooks + PMS 🇺🇸",desc:"La référence internationale des livrets d'accueil digitaux pour voyageurs. PMS en complément. Le livret Hostfully est la solution la plus avancée pour l'expérience voyageur : multilingue, recommandations locales, upsell services. Pas de gestion réseau ni financière.",points:["Livrets voyageur digitaux multilingues","Recommandations locales personnalisées","Upsell services et extras","PMS basique","Messagerie automatisée"]},
+  {n:"Breezeway",icon:"ti-checklist",color:"#d97706",bg:"#fffbeb",cat:"Opérations & Maintenance 🇺🇸",desc:"Plateforme dédiée à l'excellence opérationnelle : planification du ménage, inspections qualité, gestion des incidents et suivi des stocks de consommables. Très fort sur les modules 11 et 12 du cahier des charges Yes. Doit être combiné avec un PMS.",points:["Planning ménage avec app mobile prestataires","Inspections qualité avec photos","Gestion incidents et maintenance","Suivi stocks consommables","Rapports qualité automatisés"]},
+  {n:"Jurny",icon:"ti-robot",color:"#c2410c",bg:"#fff7ed",cat:"PMS IA-first 🇺🇸",desc:"Nouvelle génération de PMS entièrement centré sur l'IA. Automatise les messages voyageurs, génère des livrets adaptatifs, optimise l'upsell et automatise le check-in. Très innovant mais peu implanté en France. Aucune gestion réseau franchise.",points:["PMS avec IA intégrée nativement","Livret voyageur généré par IA","Messagerie adaptative selon profil voyageur","Upsell automatique intelligent","Check-in entièrement automatisé"]},
+  {n:"Stack DIY ×7",icon:"ti-tool",color:"#374151",bg:"#f8fafc",cat:"Concept — assemblage DIY",desc:"Ce n'est pas un produit : c'est ce qu'un franchisé devrait assembler lui-même s'il n'avait pas la plateforme Yes. 7 outils distincts, non intégrés, avec des doubles-saisies entre chaque. Coût total vérifié : 400–900 €/mois selon volume de biens. Silos de données, perte de temps, risque d'erreurs.",points:["Superhote — PMS + channel manager (57–200 €/mois)","Biloki — portail propriétaire + facturation (99–250 €/mois)","PriceLabs — tarification dynamique à $19,99/bien/mois (90–185 €/mois)","Hostfully — livret voyageur (46–130 €/mois)","Pipedrive — CRM candidats franchisés (15–75 €/mois)","Tiime / Pennylane — comptabilité (30–60 €/mois)","Teachable / Notion + Claude Pro — formation & IA (35–90 €/mois)"]},
+];
+
+function renderOutilsDesc(){
+  document.getElementById('outils-desc-grid').innerHTML=outilsDesc.map(o=>`
+    <div style="background:${o.bg};border:1px solid ${o.color}33;border-radius:12px;padding:.9rem 1rem">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem">
+        <div style="width:32px;height:32px;background:${o.color}22;border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <i class="ti ${o.icon}" style="color:${o.color};font-size:16px"></i>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#1e293b">${o.n}</div>
+          <div style="font-size:9.5px;color:#64748b">${o.cat}</div>
+        </div>
+      </div>
+      <p style="font-size:10.5px;color:#334155;line-height:1.7;margin-bottom:.6rem">${o.desc}</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:3px">
+        ${o.points.map(p=>`<li style="font-size:10px;color:#475569;display:flex;gap:5px;align-items:flex-start"><span style="color:${o.color};flex-shrink:0;font-weight:700">→</span>${p}</li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+/* ── SIMULATOR STATE ── */
+let simBiens=10, simFr=1, simMode='franchisee';
+const USD=0.93;
+
+function calcToolPrice(name, nb){
+  switch(name){
+    case 'Biloki':      return Math.round(nb<=10 ? 59+nb*9 : 149+(nb-10)*9);
+    case 'Octoplus':    return Math.round(nb<=10 ? 49+nb*8 : 129+(nb-10)*8);
+    case 'Superhote':   return Math.round(nb<=3 ? 67 : 67+(nb-3)*7);
+    case 'Amenitiz':    return Math.round(nb<=5 ? 69 : nb<=15 ? 69+(nb-5)*10 : 169+(nb-15)*12);
+    case 'Guesty':      return Math.round(nb*16*USD);
+    case 'Hostaway':    return Math.round(Math.max(150, nb*30*USD));
+    case 'Smoobu':      return Math.round(nb===1 ? 29 : 55+(nb-1)*9.60);
+    case 'Lodgify':     return Math.round(nb*40*USD);
+    case 'Hostfully':   return Math.round((nb<=4?129:nb<=10?219:nb<=19?349:499)*USD);
+    case 'Breezeway':   return Math.round(nb*19.99*USD);
+    case 'Jurny':       return Math.round(Math.max(400,nb*62)*USD);
+    case 'Stack DIY ×7':{
+      const s=nb<=3?67:67+(nb-3)*7;
+      const b=nb<=10?59+nb*9:149+(nb-10)*9;
+      const pl=nb*19.99*USD;
+      const hf=(nb<=4?129:219)*USD;
+      return Math.round(s+b+pl+hf+45+45+40);
+    }
+    case 'Yes Outil Interne ★': return 199;
+    default: return 0;
+  }
+}
+
+function calcStackRows(nb){
+  const s=nb<=3?67:67+(nb-3)*7;
+  const b=nb<=10?59+nb*9:149+(nb-10)*9;
+  const pl=Math.round(nb*19.99*USD);
+  const hf=Math.round((nb<=4?129:219)*USD);
+  const pip=45, tim=45, tea=40;
+  const total=Math.round(s+b+pl+hf+pip+tim+tea);
+  return [
+    {outil:'Superhote',fn:'PMS + channel manager',prix:Math.round(s)+'€',modules:'Module 10'},
+    {outil:'Biloki',fn:'CRM proprio + portail + facturation',prix:Math.round(b)+'€',modules:'Modules 7, 9, 13'},
+    {outil:'PriceLabs',fn:'Tarification dynamique ($19,99/bien)',prix:pl+'€',modules:'Module 10 (tarification)'},
+    {outil:'Hostfully',fn:'Livret voyageur digital',prix:hf+'€',modules:'Module 14'},
+    {outil:'Pipedrive',fn:'CRM candidats franchisés',prix:pip+'€',modules:'Module 3'},
+    {outil:'Tiime / Pennylane',fn:'Facturation & comptabilité',prix:tim+'€',modules:'Modules 5, 9, 17'},
+    {outil:'Teachable + Claude Pro',fn:'Formation réseau & IA',prix:tea+'€',modules:'Modules 20, 21'},
+    {outil:'TOTAL STACK',fn:'Couverture partielle (~16/22 modules)',prix:'<strong>'+total+' €HT</strong>',modules:'<em>Silos non intégrés</em>',total:true},
+  ];
+}
+
+function setSimMode(mode){
+  simMode=mode;
+  document.getElementById('btn-par-fr').classList.toggle('stog-active', mode==='franchisee');
+  document.getElementById('btn-reseau').classList.toggle('stog-active', mode==='reseau');
+  renderPricingDynamic();
+}
+
+function updateSim(){
+  simBiens=parseInt(document.getElementById('sim-biens').value);
+  simFr=parseInt(document.getElementById('sim-fr').value);
+  document.getElementById('sim-biens-val').textContent=simBiens;
+  document.getElementById('sim-fr-val').textContent=simFr;
+  renderPricingDynamic();
+}
+
+function renderPricingDynamic(){
+  const mult = simMode==='reseau' ? simFr : 1;
+  const unit = simMode==='reseau' ? '€HT/mois réseau' : '€HT/mois';
+
+  /* KPIs */
+  const yesP=calcToolPrice('Yes Outil Interne ★',simBiens)*mult;
+  const stackP=calcToolPrice('Stack DIY ×7',simBiens)*mult;
+  const bestAlt=Math.min(...['Biloki','Superhote','Smoobu','Amenitiz'].map(n=>calcToolPrice(n,simBiens)*mult));
+  const eco=stackP-yesP;
+  const kpis=[
+    {label:'Yes Outil Interne ★',val:yesP.toLocaleString('fr-FR')+' €',sub:unit,col:'#4ade80'},
+    {label:'Stack DIY ×7',val:stackP.toLocaleString('fr-FR')+' €',sub:unit,col:'#f87171'},
+    {label:'Économie vs Stack',val:eco.toLocaleString('fr-FR')+' €',sub:'soit '+(Math.round(eco/yesP*100))+'% moins cher',col:'#818cf8'},
+    {label:simMode==='reseau'?'MRR réseau Yes':'Meilleure alternative marché',val:simMode==='reseau'?(199*simFr).toLocaleString('fr-FR')+' €':bestAlt.toLocaleString('fr-FR')+' €',sub:simMode==='reseau'?simFr+' franchisés × 199€':'(Superhote / Smoobu / Amenitiz)',col:'#fb923c'},
+  ];
+  document.getElementById('sim-kpis').innerHTML=kpis.map(k=>`
+    <div class="sim-kpi">
+      <div class="sim-kpi-label">${k.label}</div>
+      <div class="sim-kpi-val" style="color:${k.col}">${k.val}</div>
+      <div class="sim-kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  /* CHART */
+  const toolColors={'Biloki':'#4338ca','Octoplus':'#7c3aed','Superhote':'#059669','Amenitiz':'#0369a1',
+    'Guesty':'#991b1b','Hostaway':'#64748b','Smoobu':'#65a30d','Lodgify':'#be185d',
+    'Hostfully':'#0891b2','Breezeway':'#d97706','Jurny':'#c2410c',
+    'Stack DIY ×7':'#374151','Yes Outil Interne ★':'#15803d'};
+  const chartData=outils.map(o=>({n:o.n,v:calcToolPrice(o.n,simBiens)*mult,c:toolColors[o.n]||'#64748b',yes:o.yes,stack:o.stack}))
+    .sort((a,b)=>a.v-b.v);
+  const mx=Math.max(...chartData.map(d=>d.v));
+  document.getElementById('sim-chart').innerHTML=chartData.map(d=>{
+    const pct=Math.max(3,Math.round(d.v/mx*100));
+    const showInside=pct>35;
+    return `<div class="sim-bar-row">
+      <div class="sim-bar-lbl" title="${d.n}">${d.n.length>18?d.n.slice(0,17)+'…':d.n}</div>
+      <div class="sim-bar-track">
+        <div class="sim-bar-fill" style="width:${pct}%;background:${d.c}${d.yes?';outline:2px solid #15803d':''}">
+          ${showInside?`<span class="sim-bar-amt">${d.v.toLocaleString('fr-FR')} €</span>`:''}
+        </div>
+        ${!showInside?`<span class="sim-bar-amt-out">${d.v.toLocaleString('fr-FR')} €</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  /* CARDS */
+  document.getElementById('pricing-grid').innerHTML=pricing.map(p=>{
+    const dyn=calcToolPrice(p.n,simBiens)*mult;
+    return `<div class="price-card${p.yes?' featured':''}">
+      ${p.yes?'<div class="pbadge">★ Recommandé</div>':''}
+      <div class="ptool">${p.n}</div>
+      <div class="ptype">${p.prop}</div>
+      <div class="pamt" style="font-size:${dyn>=1000?'16px':'20px'}">${dyn.toLocaleString('fr-FR')} €<span style="font-size:10px;font-weight:400;color:#94a3b8"> /mois</span></div>
+      <div class="punit">${p.tarif} — pour ${simBiens} bien${simBiens>1?'s':''}${simMode==='reseau'?' × '+simFr+' franchisés':''}</div>
+      <div class="pincl">
+        ${p.incl.map(i=>`<div class="prow"><i class="ti ti-check pi"></i>${i}</div>`).join('')}
+        ${p.excl.map(e=>`<div class="prow"><i class="ti ti-x px"></i>${e}</div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  /* STACK TABLE */
+  const rows=calcStackRows(simBiens);
+  const stackTotal=rows.find(r=>r.total);
+  document.getElementById('stack-body').innerHTML=rows.map(s=>`
+    <tr${s.total?' style="background:#fef3c7;font-weight:700"':''}>
+      <td><strong>${s.outil}</strong></td><td>${s.fn}</td>
+      <td>${simMode==='reseau'&&s.total?'<strong>'+(calcToolPrice('Stack DIY ×7',simBiens)*simFr).toLocaleString('fr-FR')+' €HT</strong>':s.prix}</td>
+      <td style="font-size:10px;color:#64748b">${s.modules}</td>
+    </tr>`).join('');
+
+  /* VERDICT */
+  const stackTot=calcToolPrice('Stack DIY ×7',simBiens)*mult;
+  const yesTot=199*mult;
+  const saving=stackTot-yesTot;
+  document.getElementById('sim-verdict').innerHTML=`
+    <strong>Simulation : ${simBiens} logement${simBiens>1?'s':''} / franchisé · ${simFr} franchisé${simFr>1?'s':''} · vue ${simMode==='reseau'?'réseau complet':'par franchisé'}</strong><br>
+    Stack DIY = <strong>${stackTot.toLocaleString('fr-FR')} €HT/mois</strong> pour ${simMode==='reseau'?simFr+' franchisés':'1 franchisé'} (couverture partielle ~16/22 modules, silos non intégrés).<br>
+    Yes Outil Interne = <strong>${yesTot.toLocaleString('fr-FR')} €HT/mois</strong> · 22 modules complets · 4 acteurs couverts · support réseau inclus.<br>
+    → Économie : <strong style="color:#a5b4fc">${saving.toLocaleString('fr-FR')} €HT/mois</strong> soit ${Math.round(saving/yesTot*100)} % de plus qu'il faudrait débourser sans la plateforme Yes.`;
+}
+
+function renderPricing(){ renderPricingDynamic(); }
+
+function showTab(id,btn){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+renderSyn();renderCharts();renderFeatTable();renderScoring();renderPricing();renderOutilsDesc();
+</script>
+</body>
+</html>

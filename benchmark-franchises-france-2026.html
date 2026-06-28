@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark Franchises France 2026 — Yes Conciergerie</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:1rem}
+.hdr{background:linear-gradient(135deg,#1e3a8a,#1a56db);color:#fff;padding:1.2rem 1.4rem;border-radius:12px 12px 0 0}
+.hdr h1{font-size:16px;font-weight:600;margin-bottom:4px}
+.hdr p{font-size:11.5px;opacity:.8}
+.badge{display:inline-block;margin-top:.5rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:2px 12px;font-size:10px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:1.2rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+
+/* ── TABS ── */
+.tabs{display:flex;background:#fff;border-bottom:1px solid #e2e8f0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:.55rem .75rem;font-size:11px;text-align:center;cursor:pointer;color:#64748b;border:none;background:none;border-bottom:2.5px solid transparent;transition:.15s;white-space:nowrap}
+.tab.active{color:#1a56db;border-bottom-color:#1a56db;font-weight:600}
+.tab:hover:not(.active){background:#f8fafc}
+.pane{display:none;padding:1rem}
+.pane.active{display:block}
+
+/* ── KPIS ── */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px;margin-bottom:1rem}
+.kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.7rem .9rem}
+.kpi .lbl{font-size:9.5px;color:#64748b;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+.kpi .val{font-size:19px;font-weight:600;color:#1a56db}
+.kpi .sub{font-size:9.5px;color:#94a3b8;margin-top:2px}
+
+/* ── CHARTS ── */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.chart-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.85rem 1rem}
+.chart-card h3{font-size:10px;font-weight:600;color:#64748b;margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.04em}
+.bar-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px}
+.bar-lbl{width:100px;flex-shrink:0;color:#64748b;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;background:#f1f5f9;border-radius:99px;height:9px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px}
+.bar-val{width:55px;font-size:9.5px;font-weight:500;color:#334155}
+
+/* ── TABLES ── */
+.tbl-wrap{overflow:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e2e8f0;max-height:420px}
+table{width:100%;border-collapse:collapse;font-size:11px;min-width:500px}
+thead th{background:#1e3a8a;color:#fff;padding:7px 9px;text-align:left;white-space:nowrap;position:sticky;top:0;font-weight:500;font-size:10.5px}
+tbody tr{border-bottom:1px solid #f1f5f9}
+tbody tr:hover{background:#f8fafc}
+tbody tr.yes-row td{background:#eff6ff}
+tbody td{padding:5px 8px;vertical-align:top;color:#334155;font-size:10.5px}
+.sh-hdr td{background:#f1f5f9;color:#1a56db;font-weight:600;font-size:10px;letter-spacing:.05em;border-top:1px solid #bfdbfe}
+.tag{display:inline-block;border-radius:99px;padding:2px 7px;font-size:9px;font-weight:600;white-space:nowrap}
+.tb{background:#dbeafe;color:#1e40af}.tv{background:#d1fae5;color:#065f46}.ty{background:#fef3c7;color:#92400e}.tr{background:#fee2e2;color:#991b1b}
+.warn{background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:.55rem .75rem;font-size:11px;color:#92400e;margin-bottom:.75rem;display:flex;gap:6px;align-items:flex-start}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.7rem}
+.toolbar input,.toolbar select{font-size:11px;padding:6px 9px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#334155;width:100%}
+.toolbar input{flex:1;min-width:0}
+
+/* ── CONCIERGERIE CARDS ── */
+.conc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.conc-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.85rem;transition:.15s}
+.conc-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.conc-card.yes-card{border-color:#1a56db;border-width:2px;background:#f0f7ff}
+.conc-card h3{font-size:12px;font-weight:600;margin-bottom:4px;color:#1e293b}
+.crow{display:flex;justify-content:space-between;font-size:10.5px;padding:3.5px 0;border-bottom:1px solid #f1f5f9}
+.crow:last-of-type{border:none}
+.crow .k{color:#64748b}.crow .v{font-weight:500;text-align:right;max-width:55%}
+.note-box{margin-top:.5rem;font-size:10px;color:#64748b;background:#f8fafc;border-radius:6px;padding:5px 8px}
+
+/* ── GLOSSAIRE ── */
+.gl-sec h2{font-size:12px;font-weight:600;color:#1a56db;margin:1.2rem 0 .6rem;padding-bottom:4px;border-bottom:1px solid #bfdbfe;text-transform:uppercase;letter-spacing:.05em}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px}
+.gl-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:.8rem 1rem}
+.gl-item .term{font-size:12px;font-weight:600;margin-bottom:4px;color:#1e293b}
+.gl-item .def{font-size:10.5px;color:#64748b;line-height:1.6}
+.gl-item .impact{font-size:10px;margin-top:6px;padding:3px 7px;background:#fef3c7;border-radius:5px;color:#92400e}
+.src-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.src-list li{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:6px 11px;font-size:11px;color:#334155}
+
+/* ── YES ANALYSE ── */
+.yes-intro{background:#eff6ff;border-left:3px solid #1a56db;border-radius:0 10px 10px 0;padding:.9rem 1rem;margin-bottom:1rem}
+.yes-intro h2{font-size:13px;font-weight:600;color:#1a56db;margin-bottom:.3rem}
+.yes-intro p{font-size:11px;color:#334155;line-height:1.7}
+.yes-costs{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:1rem;overflow:hidden}
+.yes-costs-hdr{background:#1e3a8a;color:#fff;padding:8px 11px;font-size:11px;font-weight:600}
+.cost-section-title{background:#f8fafc;padding:5px 11px;font-size:10px;font-weight:700;color:#1a56db;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid #e2e8f0}
+.cost-row{display:flex;justify-content:space-between;align-items:center;padding:6px 11px;border-bottom:1px solid #f1f5f9;font-size:11px;gap:6px;flex-wrap:wrap}
+.cost-row:last-child{border:none}
+.cost-row .camount{font-weight:600;color:#1e40af;text-align:right}
+.cbadge{font-size:9px;padding:2px 7px;border-radius:99px;font-weight:500;white-space:nowrap}
+.cbadge-ob{background:#fee2e2;color:#991b1b}
+.cbadge-op{background:#f3f4f6;color:#374151}
+.cbadge-re{background:#d1fae5;color:#065f46}
+.total-bar{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.8rem 1rem;margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.total-item .tl{font-size:10px;color:#64748b;margin-bottom:2px}
+.total-item .tv2{font-size:14px;font-weight:700;color:#1a56db}
+.comp-wrap{overflow:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:1rem}
+.comp-tbl{width:100%;border-collapse:collapse;font-size:10.5px;min-width:500px}
+.comp-tbl th{background:#1e3a8a;color:#fff;padding:7px 9px;text-align:left;font-weight:500;white-space:nowrap}
+.comp-tbl td{padding:6px 9px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+.comp-tbl tr.yes td{background:#eff6ff;font-weight:600}
+.reco-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:.8rem}
+.reco-card{border-radius:10px;padding:.9rem 1rem;border:1px solid}
+.reco-up{background:#f0fdf4;border-color:#86efac}.reco-down{background:#fef2f2;border-color:#fca5a5}.reco-ok{background:#eff6ff;border-color:#93c5fd}
+.reco-card h3{font-size:11px;font-weight:600;margin-bottom:.5rem;display:flex;align-items:center;gap:6px}
+.reco-up h3{color:#15803d}.reco-down h3{color:#b91c1c}.reco-ok h3{color:#1d4ed8}
+.reco-card ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.reco-card li{font-size:10.5px;color:#334155;padding-left:.9rem;position:relative;line-height:1.6}
+.reco-card li::before{content:"•";position:absolute;left:0;color:#94a3b8}
+.verdict{background:#1e3a8a;color:#fff;border-radius:10px;padding:1rem 1.1rem;font-size:11px;line-height:1.8}
+.verdict strong{color:#93c5fd}
+
+/* ── EDIT TOOLBAR ── */
+.edit-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:1rem;padding:.65rem .9rem;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;flex-wrap:wrap}
+.edit-toolbar span{font-size:11px;color:#92400e;font-weight:500;flex:1;min-width:120px}
+.btn{padding:6px 13px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:500;transition:.15s}
+.btn-edit{background:#1a56db;color:#fff}.btn-edit:hover{background:#1e40af}
+.btn-save{background:#059669;color:#fff}.btn-save:hover{background:#047857}
+.btn-cancel{background:#fff;color:#334155;border:1px solid #e2e8f0}.btn-cancel:hover{background:#f8fafc}
+
+/* ── PROPALE / BUILDER ── */
+.prop-hero{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #86efac;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem}
+.prop-hero h2{font-size:13px;font-weight:700;color:#15803d;margin-bottom:.3rem}
+.prop-hero p{font-size:11px;color:#334155;line-height:1.7}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:1rem}
+.prop-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+.prop-card-hdr{padding:.7rem 1rem;font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:8px}
+.prop-current .prop-card-hdr{background:#fef2f2;color:#b91c1c}
+.prop-new .prop-card-hdr{background:#f0fdf4;color:#15803d}
+.prop-card-body{padding:.8rem 1rem}
+.prop-row{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid #f1f5f9;font-size:11px;gap:8px}
+.prop-row:last-child{border:none}
+.prop-row .pk{color:#64748b;flex:1}.prop-row .pv{font-weight:600;text-align:right;max-width:55%}
+.prop-row .pv.red{color:#b91c1c}.prop-row .pv.green{color:#059669}.prop-row .pv.blue{color:#1a56db}
+.delta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:1rem}
+.delta-card{border-radius:10px;padding:.8rem 1rem;border:1px solid}
+.delta-up{background:#f0fdf4;border-color:#86efac}
+.delta-keep{background:#f0f9ff;border-color:#bae6fd}
+.delta-down{background:#fff7ed;border-color:#fed7aa}
+.delta-card .dt{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+.delta-up .dt{color:#15803d}.delta-keep .dt{color:#0369a1}.delta-down .dt{color:#c2410c}
+.delta-card .dd{font-size:11px;color:#334155;line-height:1.7}
+.impact-tbl{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:1rem;min-width:480px}
+.impact-tbl th{background:#f8fafc;color:#64748b;font-weight:600;font-size:10px;padding:6px 9px;text-align:left;border-bottom:1px solid #e2e8f0}
+.impact-tbl td{padding:6px 9px;border-bottom:1px solid #f1f5f9}
+.impact-tbl tr:hover td{background:#f8fafc}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:9.5px;font-weight:600}
+.pill-g{background:#d1fae5;color:#065f46}.pill-r{background:#fee2e2;color:#991b1b}.pill-b{background:#dbeafe;color:#1e40af}.pill-y{background:#fef3c7;color:#92400e}
+.rationale{background:#f8fafc;border-radius:10px;padding:.9rem 1.1rem;margin-bottom:.8rem;border:1px solid #e2e8f0}
+.rationale h3{font-size:11.5px;font-weight:600;color:#1e293b;margin-bottom:.5rem}
+.rationale ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.rationale li{font-size:11px;color:#334155;padding-left:1rem;position:relative;line-height:1.6}
+.rationale li::before{content:"→";position:absolute;left:0;color:#1a56db}
+
+/* ══ RESPONSIVE TABLETTE (≤ 768px) ══ */
+@media(max-width:768px){
+  .wrap{padding:.7rem}
+  .hdr{padding:1rem 1.1rem;border-radius:10px 10px 0 0}
+  .hdr h1{font-size:14px}
+  .chart-grid{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .reco-grid{grid-template-columns:1fr}
+  .conc-grid{grid-template-columns:1fr}
+  .gl-grid{grid-template-columns:1fr}
+  .prop-grid{grid-template-columns:1fr}
+  .delta-grid{grid-template-columns:1fr}
+  .total-bar{flex-direction:column;align-items:flex-start;gap:.7rem}
+  .pane{padding:.8rem}
+}
+
+/* ══ RESPONSIVE MOBILE (≤ 480px) ══ */
+@media(max-width:480px){
+  .wrap{padding:.5rem}
+  .hdr{padding:.85rem 1rem}
+  .hdr h1{font-size:13px}
+  .hdr p{font-size:11px}
+  .badge{font-size:9px;padding:2px 8px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:6px}
+  .kpi .val{font-size:16px}
+  .pane{padding:.65rem}
+  .tab{padding:.5rem .6rem;font-size:10.5px}
+  .tbl-wrap{max-height:320px}
+  .cost-row{flex-direction:column;align-items:flex-start;gap:3px}
+  .cost-row .camount{text-align:left}
+  .edit-toolbar{flex-direction:column;align-items:flex-start}
+  .edit-toolbar span{min-width:0;width:100%}
+  .yes-intro h2{font-size:12px}
+  .reco-card li{font-size:10px}
+  .verdict{font-size:10.5px;line-height:1.7}
+  .prop-hero h2{font-size:12px}
+  .de-counter{flex-direction:column;gap:.6rem}
+  .de-counter .dc-total{font-size:19px}
+  .builder-layout{grid-template-columns:1fr}
+  .recap-grid{grid-template-columns:repeat(2,1fr)}
+  .brow{flex-wrap:wrap;gap:5px}
+  .brow .edit-amt{width:80px}
+  .new-item-row{flex-wrap:wrap}
+  .new-item-row input{min-width:0}
+  .bar-lbl{width:80px;font-size:9px}
+  .bar-val{width:45px;font-size:9px}
+  .warn{font-size:10px}
+  .gl-item .term{font-size:11px}
+  .gl-item .def{font-size:10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+  <div class="hdr">
+    <h1>Benchmark Franchises France 2026</h1>
+    <p>Comparatif complet — droits d'entrée, royalties, investissement, outils & vigilances</p>
+    <div class="badge">Sources : FFF · Officiel de la Franchise · Franchise Magazine · enquêtes 2025-2026</div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('synthese',this)"><i class="ti ti-chart-bar"></i> Synthèse</button>
+    <button class="tab" onclick="showTab('enseignes',this)"><i class="ti ti-building"></i> Toutes les enseignes</button>
+    <button class="tab" onclick="showTab('conc',this)"><i class="ti ti-home"></i> Focus Conciergerie</button>
+    <button class="tab" onclick="showTab('yes',this)" style="color:#1a56db;font-weight:600"><i class="ti ti-search"></i> Analyse Yes ★</button>
+    <button class="tab" onclick="showTab('propale',this)" style="color:#059669;font-weight:600"><i class="ti ti-bulb"></i> Propale Tarifaire ★</button>
+    <button class="tab" onclick="showTab('gloss',this)"><i class="ti ti-book"></i> Glossaire & Sources</button>
+  </div>
+
+  <!-- SYNTHESE -->
+  <div class="pane active" id="pane-synthese">
+    <div class="kpis">
+      <div class="kpi"><div class="lbl">Secteurs</div><div class="val">17</div><div class="sub">restauration → luxe</div></div>
+      <div class="kpi"><div class="lbl">Enseignes</div><div class="val">~90</div><div class="sub">données 2024–2026</div></div>
+      <div class="kpi"><div class="lbl">Apport min.</div><div class="val">10k€</div><div class="sub">Beauté / SAP</div></div>
+      <div class="kpi"><div class="lbl">Invest. max.</div><div class="val">1,5M€</div><div class="sub">Kyriad</div></div>
+      <div class="kpi"><div class="lbl">Royalties moy.</div><div class="val">~4%</div><div class="sub">CA HT France</div></div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-card"><h3>Droit d'entrée moyen par secteur (€)</h3><div id="ch-de"></div></div>
+      <div class="chart-card"><h3>Investissement global moyen (€)</h3><div id="ch-inv"></div></div>
+      <div class="chart-card"><h3>Apport personnel minimum (€)</h3><div id="ch-ap"></div></div>
+      <div class="chart-card"><h3>Royalties max. par secteur (% CA)</h3><div id="ch-ry"></div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Secteur</th><th>DE moyen</th><th>DE min → max</th><th>Royalties</th><th>Apport min.</th><th>Invest. global</th><th>Nb enseignes</th><th>Remarques clés</th></tr></thead>
+        <tbody id="syn-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENSEIGNES -->
+  <div class="pane" id="pane-enseignes">
+    <div class="warn"><i class="ti ti-alert-triangle"></i> Montants indicatifs. Toujours demander le DIP officiel avant signature. Pour la conciergerie : droit d'entrée ≠ commission prélevée sur les loyers propriétaires.</div>
+    <div class="toolbar">
+      <input type="text" id="srch" placeholder="Rechercher une enseigne…" oninput="filterE()">
+      <select id="flt-sec" onchange="filterE()"><option value="">— Tous secteurs —</option></select>
+      <select id="flt-mod" onchange="filterE()">
+        <option value="">— Tous modèles —</option><option>Franchise classique</option><option>Coopérative</option><option>City Manager</option><option>Mandataires</option><option>Partenariat</option>
+      </select>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Enseigne</th><th>Modèle</th><th>Droit d'entrée</th><th>Apport min.</th><th>Invest. global</th><th>Royalties</th><th>Redev. pub.</th><th>Durée</th><th>Unités FR</th><th>Notes & vigilances</th></tr></thead>
+        <tbody id="ens-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONCIERGERIE -->
+  <div class="pane" id="pane-conc">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.7rem">
+      <span class="tag tb">🔵 Franchise classique</span><span class="tag tv">🟢 Réseau mandataires</span><span class="tag ty">🟡 City Manager</span><span class="tag tr">🔴 Partenariat indépendant</span>
+    </div>
+    <div class="warn"><i class="ti ti-alert-triangle"></i> Redevance réseau (% CA) ≠ commission propriétaire (% des loyers voyageurs).</div>
+    <div class="toolbar">
+      <select id="flt-cseg" onchange="filterConc()"><option value="">— Tous segments —</option><option>Loc. saisonnière</option><option>Conciergerie d'entreprise</option><option>Conciergerie luxe</option></select>
+      <select id="flt-ctype" onchange="filterConc()"><option value="">— Tous types —</option><option>Franchise classique</option><option>City Manager</option><option>Réseau mandataires</option><option>Partenariat</option></select>
+    </div>
+    <div class="conc-grid" id="conc-cards"></div>
+  </div>
+
+  <!-- GLOSSAIRE -->
+  <div class="pane" id="pane-gloss">
+    <div class="gl-sec"><h2>Termes généraux</h2><div class="gl-grid" id="gl-gen"></div></div>
+    <div class="gl-sec"><h2>Réglementation conciergerie</h2><div class="gl-grid" id="gl-reg"></div></div>
+    <div class="gl-sec"><h2>Sources principales</h2><ul class="src-list" id="src-list"></ul></div>
+  </div>
+
+  <!-- ANALYSE YES -->
+  <div class="pane" id="pane-yes">
+    <div class="edit-toolbar" id="edit-bar" style="display:none">
+      <i class="ti ti-pencil" style="color:#92400e"></i>
+      <span>Mode édition actif — cliquez sur n'importe quel texte pour le modifier</span>
+      <button class="btn btn-save" onclick="saveEdit()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
+      <button class="btn btn-cancel" onclick="cancelEdit()">Annuler</button>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:.8rem">
+      <button class="btn btn-edit" id="edit-btn" onclick="startEdit()"><i class="ti ti-pencil"></i> Modifier l'analyse</button>
+    </div>
+
+    <div class="yes-intro">
+      <h2>Yes Conciergerie — analyse complète basée sur le contrat réel (DIP)</h2>
+      <p id="yes-intro-text">Décomposition de tous les postes de coûts issus de l'article 9 du contrat de franchise, comparés aux autres réseaux de conciergerie du benchmark.</p>
+    </div>
+
+    <div class="yes-costs">
+      <div class="yes-costs-hdr">Décomposition des coûts Yes Conciergerie — article 9 du contrat</div>
+      <div class="cost-section-title">Frais d'entrée (one-off)</div>
+      <div class="cost-row"><span>Pack informatique avec licence Office</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">523 €HT</span></span></div>
+      <div class="cost-row"><span>Pack informatique sans licence Office</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">446 €HT</span></span></div>
+      <div class="cost-row"><span>Setup réseaux sociaux (Instagram + Facebook)</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Option</span><span class="camount">180 €HT</span></span></div>
+      <div class="cost-row"><span>Site Internet zone Valras (si 2e zone)</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Option zone</span><span class="camount">1 250 €HT</span></span></div>
+      <div class="cost-section-title">Charges récurrentes obligatoires</div>
+      <div class="cost-row"><span>Redevance réseau — 6 % HT du CA annuel (à partir de M+4)</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">6 % CA (min. 650 €HT/mois)</span></span></div>
+      <div class="cost-row"><span>Plancher garanti an 1 &amp; 2</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">8 500 €HT/an</span></span></div>
+      <div class="cost-row"><span>Plancher garanti an 3</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">9 500 €HT/an</span></span></div>
+      <div class="cost-row"><span>Community management (3 posts/sem. réseaux locaux)</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">250 €HT/mois → 3 000 €HT/an</span></span></div>
+      <div class="cost-row"><span>Redevance marketing annuelle (campagnes nationales / salons)</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">2 800 €HT/an</span></span></div>
+      <div class="cost-row"><span>Maintenance site Internet local</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-ob">Obligatoire</span><span class="camount">250 €/an</span></span></div>
+      <div class="cost-section-title">Channel manager (coût variable)</div>
+      <div class="cost-row"><span>0–5 logements</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Variable</span><span class="camount">100 €HT/mois + 3,5 % réservations</span></span></div>
+      <div class="cost-row"><span>6–10 logements</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Variable</span><span class="camount">50 €HT/mois + 3,5 % réservations</span></span></div>
+      <div class="cost-row"><span>11+ logements</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Variable</span><span class="camount">3,5 % réservations uniquement</span></span></div>
+      <div class="cost-section-title">Options de lancement</div>
+      <div class="cost-row"><span>Budget Meta Ads lancement</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Option</span><span class="camount">3 000 €HT</span></span></div>
+      <div class="cost-row"><span>Google Ads — 6 premiers mois</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Option</span><span class="camount">3 000 €HT</span></span></div>
+      <div class="cost-row"><span>Pack SEO renforcé — 20 hyperlinks supplémentaires</span><span style="display:flex;gap:6px;align-items:center"><span class="cbadge cbadge-op">Option</span><span class="camount">2 000 €HT</span></span></div>
+    </div>
+
+    <div class="total-bar">
+      <div class="total-item"><div class="tl">Charges fixes obligatoires an 1 (hors 6 %)</div><div class="tv2">6 050 €HT/an</div></div>
+      <div class="total-item"><div class="tl">Plancher redevance réseau an 1 &amp; 2</div><div class="tv2">8 500 €HT/an</div></div>
+      <div class="total-item"><div class="tl">Total socle obligatoire an 1</div><div class="tv2" style="color:#b91c1c">~14 550 €HT/an</div></div>
+      <div class="total-item"><div class="tl">Avec toutes options Ads/SEO</div><div class="tv2" style="color:#b91c1c">~22 550 €HT</div></div>
+    </div>
+
+    <div class="comp-wrap">
+      <table class="comp-tbl">
+        <thead><tr><th>Réseau</th><th>Type</th><th>Droit d'entrée</th><th>Redevance réseau</th><th>Charges fixes/an (hors % CA)</th><th>Apport min.</th><th>Zone excl.</th></tr></thead>
+        <tbody id="yes-body"></tbody>
+      </table>
+    </div>
+
+    <div class="verdict" style="background:#f0fdf4;border:1.5px solid #86efac;color:#14532d" id="verdict-text">
+      <strong style="color:#15803d">Conclusion :</strong> Yes Conciergerie est <strong>dans les normes marché</strong> sur la redevance réseau (6 %) mais se distingue par une <strong>structure de charges fixes lourde et éclatée</strong> : plancher 8 500 €HT + marketing 2 800 €HT + community mgmt 3 000 €HT + maintenance 250 € = <strong>~14 550 €HT/an de charges fixes obligatoires dès l'an 1</strong>, avant même le % CA. Chez la plupart des concurrents, les charges fixes annuelles hors % CA sont de 500 à 3 500 €HT. Le risque commercial n'est pas le niveau des prix mais la <strong>fragmentation de la présentation</strong> : un prospect qui additionne les lignes perçoit un coût bien supérieur à la réalité nette. La priorité est de <strong>consolider et simplifier</strong> la présentation, pas de baisser les tarifs.
+    </div>
+  </div>
+
+  <!-- PROPALE TARIFAIRE -->
+  <div class="pane" id="pane-propale">
+
+
+    <!-- styles spécifiques builder -->
+    <style>
+    .builder-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1rem}
+    @media(max-width:700px){.builder-layout{grid-template-columns:1fr}}
+    .builder-panel{background:#fff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden}
+    .builder-panel-hdr{padding:.7rem 1rem;font-size:11.5px;font-weight:700;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e2e8f0}
+    .builder-panel-hdr.red{background:#fef2f2;color:#b91c1c}
+    .builder-panel-hdr.green{background:#f0fdf4;color:#15803d}
+    .builder-panel-body{padding:.5rem}
+    .brow{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:8px;font-size:11px;margin-bottom:3px;transition:.15s;border:1px solid transparent}
+    .brow.in-de{background:#eff6ff;border-color:#bfdbfe}
+    .brow.out{background:#f8fafc;border-color:#e2e8f0}
+    .brow.fixed{background:#f8fafc;border-color:#e2e8f0;opacity:.8;cursor:default}
+    .brow .bname{flex:1;color:#334155}
+    .brow .bamt{font-weight:600;color:#1e40af;white-space:nowrap}
+    .brow .bamt.red{color:#b91c1c}
+    .brow .bamt.green{color:#059669}
+    .brow .bamt.orange{color:#c2410c}
+    .brow .toggle-de{width:28px;height:28px;border-radius:7px;border:1.5px solid #bfdbfe;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.15s;flex-shrink:0}
+    .brow.in-de .toggle-de{background:#1a56db;border-color:#1a56db;color:#fff}
+    .brow .toggle-de:hover{background:#dbeafe}
+    .brow.in-de .toggle-de:hover{background:#1e40af}
+    .brow .edit-amt{width:90px;font-size:11px;padding:3px 6px;border:1px solid #bfdbfe;border-radius:6px;color:#1e40af;font-weight:600;text-align:right}
+    .de-counter{background:linear-gradient(135deg,#1e3a8a,#1a56db);color:#fff;border-radius:12px;padding:1rem 1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+    .de-counter .dc-base{font-size:11px;opacity:.8}
+    .de-counter .dc-total{font-size:22px;font-weight:700}
+    .de-counter .dc-breakdown{font-size:10.5px;opacity:.75;flex:1}
+    .de-counter .dc-badge{background:rgba(255,255,255,.2);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:600}
+    .new-item-row{display:flex;gap:6px;margin-top:6px;padding-top:6px;border-top:1px dashed #e2e8f0}
+    .new-item-row input{flex:1;font-size:11px;padding:5px 8px;border:1px solid #e2e8f0;border-radius:7px}
+    .new-item-row input.amt{width:80px;flex:none}
+    .btn-add-item{padding:5px 10px;background:#1a56db;color:#fff;border:none;border-radius:7px;font-size:11px;cursor:pointer;white-space:nowrap}
+    .btn-add-item:hover{background:#1e40af}
+    .section-label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;padding:4px 7px;margin-top:4px}
+    .recap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:1rem}
+    .recap-kpi{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:.7rem .9rem}
+    .recap-kpi .rl{font-size:10px;color:#64748b;margin-bottom:2px}
+    .recap-kpi .rv{font-size:16px;font-weight:700}
+    .recap-kpi .rv.blue{color:#1a56db}.recap-kpi .rv.green{color:#059669}.recap-kpi .rv.red{color:#b91c1c}.recap-kpi .rv.orange{color:#c2410c}
+    .hint{font-size:10px;color:#94a3b8;margin-top:4px;font-style:italic}
+    </style>
+
+    <div class="prop-hero" style="margin-bottom:1rem">
+      <h2><i class="ti ti-bulb"></i> Builder tarifaire interactif — Yes Conciergerie</h2>
+      <p>Cliquez sur le <strong>bouton ↑</strong> d'une ligne pour l'absorber dans le droit d'entrée. Modifiez les montants directement. Le total se recalcule en temps réel.</p>
+    </div>
+
+    <!-- COMPTEUR DE RIGHTS D'ENTREE -->
+    <div class="de-counter">
+      <div>
+        <div class="dc-base">Droit d'entrée actuel</div>
+        <div style="font-size:13px;font-weight:500;opacity:.7;text-decoration:line-through">19 800 €HT</div>
+      </div>
+      <div style="font-size:20px;opacity:.5">→</div>
+      <div>
+        <div class="dc-base">Nouveau droit d'entrée proposé</div>
+        <div class="dc-total" id="de-total">19 800 €HT</div>
+      </div>
+      <div class="dc-breakdown" id="de-breakdown">Base : 19 800 € — aucune ligne absorbée</div>
+      <div class="dc-badge" id="de-badge">+0 €</div>
+    </div>
+
+    <div class="builder-layout">
+      <!-- GRILLE ACTUELLE -->
+      <div class="builder-panel">
+        <div class="builder-panel-hdr red"><i class="ti ti-list"></i> Grille actuelle — lignes séparées</div>
+        <div class="builder-panel-body">
+          <div class="section-label">Frais fixes récurrents</div>
+          <div class="brow fixed" data-id="rev"><span class="bname">Redevance réseau</span><input class="edit-amt" id="rev-pct" value="6" onchange="refreshDE()" title="Modifier le taux" style="width:45px"> % CA</div>
+          <div class="brow fixed" data-id="plancher"><span class="bname">Plancher an 1&amp;2 (M+4)</span><input class="edit-amt" id="plancher-amt" value="8500" onchange="refreshDE()" title="Modifier le montant" style="width:70px"> €HT/an</div>
+          <div class="section-label">Charges absorbables dans le DE</div>
+          <div class="brow out" data-id="pack-info" data-amount="523" data-label="Pack informatique">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Pack informatique</span>
+            <input class="edit-amt" value="523" onchange="updateAmt(this)" title="Modifier le montant"> €HT
+          </div>
+          <div class="brow out" data-id="setup-rs" data-amount="180" data-label="Setup réseaux sociaux">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Setup réseaux sociaux</span>
+            <input class="edit-amt" value="180" onchange="updateAmt(this)" title="Modifier le montant"> €HT
+          </div>
+          <div class="brow out" data-id="mktg" data-amount="2800" data-label="Redevance marketing">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Redevance marketing</span>
+            <input class="edit-amt" value="2800" onchange="updateAmt(this)" title="Modifier le montant"> €HT/an
+          </div>
+          <div class="brow out" data-id="cm" data-amount="3000" data-label="Community management (12 mois)">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Community mgmt (an 1)</span>
+            <input class="edit-amt" value="3000" onchange="updateAmt(this)" title="Modifier le montant"> €HT/an
+          </div>
+          <div class="brow out" data-id="maint" data-amount="250" data-label="Maintenance site">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Maintenance site</span>
+            <input class="edit-amt" value="250" onchange="updateAmt(this)" title="Modifier le montant"> €HT/an
+          </div>
+          <div class="section-label">Nouvelles lignes à intégrer</div>
+          <div class="brow out" data-id="leads" data-amount="150" data-label="Lead proprio (par deal closé)">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Lead proprio — par deal closé</span>
+            <input class="edit-amt" value="150" onchange="updateAmt(this)" title="Modifier le montant"> €/deal
+          </div>
+          <div class="brow out" data-id="outil" data-amount="0" data-label="Outil de gestion interne">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Outil de gestion interne <span style="font-size:9px;color:#f59e0b">● en construction</span></span>
+            <input class="edit-amt" value="0" onchange="updateAmt(this)" placeholder="À définir" title="Modifier le montant"> €HT
+          </div>
+          <div class="brow out" data-id="setup-sept" data-amount="0" data-label="Setup franchisés sept. 2026">
+            <button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button>
+            <span class="bname">Setup franchisés sept. 2026 <span style="font-size:9px;color:#1a56db">● nouveau</span></span>
+            <input class="edit-amt" value="0" onchange="updateAmt(this)" placeholder="À définir" title="Modifier le montant"> €HT
+          </div>
+          <!-- Ajouter une ligne custom -->
+          <div class="new-item-row">
+            <input id="new-item-name" placeholder="Nouvelle ligne…">
+            <input id="new-item-amt" class="amt" placeholder="0" type="number">
+            <button class="btn-add-item" onclick="addCustomItem()">+ Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOUVELLE GRILLE PROPOSEE -->
+      <div class="builder-panel">
+        <div class="builder-panel-hdr green"><i class="ti ti-check"></i> Nouvelle grille proposée</div>
+        <div class="builder-panel-body">
+          <div class="section-label">Droit d'entrée (one-off)</div>
+          <div class="brow in-de" style="cursor:default">
+            <span style="font-size:16px">🔑</span>
+            <span class="bname"><strong>Droit d'entrée tout compris</strong></span>
+            <span class="bamt green" id="de-display">19 800 €HT</span>
+          </div>
+          <div id="de-included-list" style="padding-left:8px;margin-top:2px;margin-bottom:6px;font-size:10px;color:#64748b"></div>
+          <div class="section-label">Charges récurrentes restantes</div>
+          <div id="remaining-list">
+            <div class="brow fixed"><span class="bname">Redevance réseau</span><span class="bamt">6 % CA (plancher 650€HT/mois à M+4)</span></div>
+          </div>
+          <div class="section-label">Nouvelles lignes variables</div>
+          <div id="variable-list">
+            <div class="brow fixed" style="background:#fefce8;border-color:#fde68a"><span class="bname">Lead proprio closé</span><span class="bamt orange" id="leads-preview">150 €/deal</span></div>
+            <div class="brow fixed" style="background:#f0fdf4;border-color:#bbf7d0"><span class="bname">Outil de gestion</span><span class="bamt green" id="outil-preview">À définir</span></div>
+            <div class="brow fixed" style="background:#eff6ff;border-color:#bfdbfe"><span class="bname">Setup sept. 2026</span><span class="bamt blue" id="setup-preview">À définir</span></div>
+            <div class="brow fixed" style="background:#fdf4ff;border-color:#e9d5ff"><span class="bname">Channel manager (0–5 biens)</span><span class="bamt" style="color:#7c3aed">100 €HT/mois + 3,5 %</span></div>
+            <div class="brow fixed" style="background:#fdf4ff;border-color:#e9d5ff"><span class="bname">Channel manager (6–10 biens)</span><span class="bamt" style="color:#7c3aed">50 €HT/mois + 3,5 %</span></div>
+            <div class="brow fixed" style="background:#fdf4ff;border-color:#e9d5ff"><span class="bname">Channel manager (11+ biens)</span><span class="bamt" style="color:#7c3aed">3,5 % uniquement</span></div>
+          </div>
+          <div class="hint">Les lignes absorbées dans le DE disparaissent de "Charges récurrentes".</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECAP KPIs -->
+    <div class="recap-grid">
+      <div class="recap-kpi"><div class="rl">DE actuel</div><div class="rv red">19 800 €HT</div></div>
+      <div class="recap-kpi"><div class="rl">DE proposé</div><div class="rv blue" id="recap-de">19 800 €HT</div></div>
+      <div class="recap-kpi"><div class="rl">Lignes absorbées</div><div class="rv green" id="recap-absorbed">0</div></div>
+      <div class="recap-kpi"><div class="rl">Royalties — plancher fixe an 1&2</div><div class="rv orange" id="recap-plancher">8 500 €HT/an</div></div>
+      <div class="recap-kpi"><div class="rl">Total charges annuelles hors DE</div><div class="rv red" id="recap-total-annuel">—</div></div>
+      <div class="recap-kpi"><div class="rl">Moyenne mensuelle hors DE</div><div class="rv" style="color:#7c3aed" id="recap-mensuel">—</div></div>
+    </div>
+
+    <div class="verdict" id="prop-verdict" style="margin-bottom:.8rem">
+      <strong style="color:#93c5fd">Logique de la propale :</strong> En absorbant les frais annexes dans le droit d'entrée, la grille devient lisible en 2 lignes (DE + redevance 6 %). Les nouvelles lignes variables (leads proprio 150€/deal, outil de gestion, setup sept.) génèrent du revenu additionnel sans alourdir le socle récurrent perçu par le franchisé.
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+const syn=[
+  {s:"Restauration rapide",de:25000,dmin:5000,dmax:50000,roy:"5–8 %",royMax:8,ap:80000,inv:750000,nb:">150",rem:"Ticket très élevé (local, équipement). Royalties + pub jusqu'à 13 %."},
+  {s:"Restauration à thème",de:31000,dmin:10000,dmax:50000,roy:"4–7 %",royMax:7,ap:80000,inv:400000,nb:">100",rem:"Redevances progressives (Groupe Bertrand, mars 2026)."},
+  {s:"Boulangerie / Pâtisserie",de:20000,dmin:8000,dmax:35000,roy:"3–6 %",royMax:6,ap:50000,inv:200000,nb:"~50",rem:"Secteur artisanal en forte croissance franchise."},
+  {s:"Immobilier résidentiel",de:24000,dmin:15000,dmax:35000,roy:"5–8 %",royMax:8,ap:40000,inv:130000,nb:"~15",rem:"Certains réseaux coopératifs (Orpi) sans droit d'entrée classique."},
+  {s:"Beauté / Esthétique",de:8000,dmin:5000,dmax:25000,roy:"3–6 %",royMax:6,ap:20000,inv:60000,nb:">100",rem:"Secteur le plus accessible. Fourniture produits souvent incluse."},
+  {s:"Coiffure",de:12000,dmin:5000,dmax:20000,roy:"3–5 %",royMax:5,ap:25000,inv:80000,nb:"~30",rem:"Densité forte. Compétition des salons indépendants."},
+  {s:"Services à la personne",de:12000,dmin:5000,dmax:20000,roy:"3–6 %",royMax:6,ap:15000,inv:50000,nb:"~40",rem:"Forte croissance silver economy. Modèle léger sans local."},
+  {s:"Commerce alimentaire",de:7000,dmin:3000,dmax:15000,roy:"2–4 %",royMax:4,ap:30000,inv:120000,nb:"~25",rem:"Modèles variés : bio, hard-discount, spécialisé."},
+  {s:"Bricolage / Maison",de:20000,dmin:5000,dmax:40000,roy:"2–4 %",royMax:4,ap:50000,inv:200000,nb:"~20",rem:"Investissement aménagement élevé. Territoire exclusif large."},
+  {s:"Optique",de:20000,dmin:15000,dmax:30000,roy:"2–5 %",royMax:5,ap:50000,inv:250000,nb:"~10",rem:"Investissement matériel élevé. Fort soutien marketing national."},
+  {s:"Sport / Fitness",de:18000,dmin:8000,dmax:35000,roy:"3–6 %",royMax:6,ap:30000,inv:150000,nb:"~40",rem:"Croissance post-Covid. Formats variés."},
+  {s:"Automobile",de:15000,dmin:5000,dmax:30000,roy:"3–6 %",royMax:6,ap:40000,inv:150000,nb:"~30",rem:"Entretien rapide, carrosserie, contrôle tech."},
+  {s:"Hôtellerie",de:30000,dmin:10000,dmax:80000,roy:"4–6 %",royMax:6,ap:150000,inv:600000,nb:"~20",rem:"Invest. immobilier hors champ. Redevances GDS/OTA s'ajoutent."},
+  {s:"Enseignement / Formation",de:12000,dmin:5000,dmax:25000,roy:"5–10 %",royMax:10,ap:15000,inv:50000,nb:"~30",rem:"Modèle léger. Royalties élevées (marque & contenus pédagogiques)."},
+  {s:"Informatique / Télécom",de:15000,dmin:5000,dmax:30000,roy:"3–6 %",royMax:6,ap:30000,inv:100000,nb:"~20",rem:"Évolution rapide des produits. Formation continue importante."},
+  {s:"Conciergerie locative",de:20000,dmin:0,dmax:50000,roy:"0–6 %",royMax:6,ap:10000,inv:35000,nb:"~10 réseaux",rem:"Modèles hétérogènes : franchise vs City Manager vs partenariat."},
+  {s:"Conciergerie entreprise",de:18000,dmin:12000,dmax:28000,roy:"0–6 %",royMax:6,ap:12000,inv:50000,nb:"~3 réseaux",rem:"Abonnement B2B récurrent. Stabilité des revenus."},
+];
+const ens=[
+  {s:"Restauration rapide",e:"McDonald's",m:"Franchise classique",de:"N.C. (~190k€)",ap:"190 000 €",inv:"750 000 €",roy:"~5 % CA",pub:"4–5 % CA",dur:"20",nb:">1 500",note:"Franchiseur propriétaire du local. Invest. réel 700–900k€."},
+  {s:"Restauration rapide",e:"Burger King",m:"Franchise classique",de:"50 000 €",ap:"250 000 €",inv:"1 000 000 €",roy:"~5 % CA",pub:"4–5 % CA",dur:"20",nb:">500",note:"Redevances progressives les 2 premières années."},
+  {s:"Restauration rapide",e:"KFC",m:"Franchise classique",de:"16 000 €",ap:"200 000 €",inv:"800 000 €",roy:"~6 % CA",pub:"~5 % CA",dur:"20",nb:"~300",note:"Très forte notoriété."},
+  {s:"Restauration rapide",e:"Subway",m:"Franchise classique",de:"9 500 €",ap:"80 000 €",inv:"200 000 €",roy:"~8 % CA",pub:"4,5 % CA",dur:"20",nb:">400",note:"Petite surface <100m². Royalties élevées (8 %)."},
+  {s:"Restauration rapide",e:"Domino's Pizza",m:"Franchise classique",de:"25 000 €",ap:"80 000 €",inv:"250 000 €",roy:"~5 % CA",pub:"~3 % CA",dur:"10",nb:"~400",note:"CA prévisionnel 2 ans >830k€."},
+  {s:"Restauration rapide",e:"Pizza Hut",m:"Franchise classique",de:"35 100 €",ap:"100 000 €",inv:"700 000 €",roy:"~6 % CA",pub:"~3 % CA",dur:"15",nb:"~80",note:"Hybride salle + livraison."},
+  {s:"Restauration rapide",e:"O'Tacos",m:"Franchise classique",de:"25 000 €",ap:"80 000 €",inv:"300 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">350",note:"Croissance très rapide en France."},
+  {s:"Restauration rapide",e:"Pokawa",m:"Franchise classique",de:"20 000 €",ap:"60 000 €",inv:"200 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"10",nb:"~80",note:"Poké bowl. Forte croissance urbaine."},
+  {s:"Restauration rapide",e:"Five Guys",m:"Franchise classique",de:"N.C.",ap:"300 000 €",inv:"1 200 000 €",roy:"~6 % CA",pub:"~3 % CA",dur:"20",nb:"~30",note:"Positionnement premium burger."},
+  {s:"Restauration à thème",e:"Hippopotamus",m:"Franchise classique",de:"30 000 €",ap:"100 000 €",inv:"500 000 €",roy:"~5 % CA",pub:"~3 % CA",dur:"10",nb:"~80",note:"Groupe Bertrand. Redevances progressives 2026."},
+  {s:"Restauration à thème",e:"Ninkasi",m:"Franchise classique",de:"30 000 €",ap:"80 000 €",inv:"800 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:"~30",note:"CA 750k€–2,2M€ selon taille."},
+  {s:"Restauration à thème",e:"Au Bureau",m:"Franchise classique",de:"28 000 €",ap:"100 000 €",inv:"600 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:"~170",note:"Pub brasserie. Groupe Bertrand."},
+  {s:"Restauration à thème",e:"Léon",m:"Franchise classique",de:"25 000 €",ap:"80 000 €",inv:"400 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:"~40",note:"Moules-frites. Relance en cours."},
+  {s:"Boulangerie / Pâtisserie",e:"Brioche Dorée",m:"Franchise classique",de:"25 000 €",ap:"80 000 €",inv:"350 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:"~400",note:"Enseigne phare aéroports & gares."},
+  {s:"Boulangerie / Pâtisserie",e:"La Mie Câline",m:"Franchise classique",de:"20 000 €",ap:"60 000 €",inv:"250 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:"~250",note:"Fort ancrage Ouest de la France."},
+  {s:"Boulangerie / Pâtisserie",e:"Feuillette",m:"Franchise classique",de:"20 000 €",ap:"70 000 €",inv:"300 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:"~150",note:"Artisan premium. Croissance nationale."},
+  {s:"Boulangerie / Pâtisserie",e:"Paul",m:"Franchise classique",de:"35 000 €",ap:"100 000 €",inv:"500 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:"~350",note:"Premium international. Ticket élevé."},
+  {s:"Immobilier",e:"Century 21",m:"Franchise classique",de:"35 000 €",ap:"50 000 €",inv:"150 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"5",nb:">900",note:"Leader notoriété France. Formation 11 semaines."},
+  {s:"Immobilier",e:"Laforêt",m:"Franchise classique",de:"28 000 €",ap:"50 000 €",inv:"150 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"5",nb:"~720",note:"Groupe Arche. Meilleure franchise immo 2021."},
+  {s:"Immobilier",e:"Orpi",m:"Coopérative franchise",de:"25 000 €",ap:"50 000 €",inv:"135 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"5",nb:">1 300",note:"Leader nb agences. Franchisé = associé."},
+  {s:"Immobilier",e:"Guy Hoquet",m:"Franchise classique",de:"18 500 €",ap:"40 000 €",inv:"105 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"5",nb:"~520",note:"Groupe Arche. Expansion Québec 2026."},
+  {s:"Immobilier",e:"ERA Immobilier",m:"Franchise classique",de:"20 000 €",ap:"35 000 €",inv:"110 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"5",nb:"~475",note:"Réseau mondial. Fort accompagnement digital."},
+  {s:"Immobilier",e:"Nestenn",m:"Franchise classique",de:"15 000 €",ap:"25 000 €",inv:"90 000 €",roy:"~5 % CA",pub:"~1 % CA",dur:"5",nb:"~300",note:"Réseau en croissance. Ticket accessible."},
+  {s:"Immobilier",e:"L'Adresse",m:"Coopérative franchise",de:"19 000 €",ap:"20 000 €",inv:"62 000 €",roy:"~5 % CA",pub:"~1 % CA",dur:"5",nb:"~200",note:"2e coopérative après Orpi."},
+  {s:"Immobilier",e:"Stéphane Plaza Immobilier",m:"Franchise classique",de:"30 000 €",ap:"50 000 €",inv:"150 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"5",nb:"~500",note:"Fort ancrage marque personnelle (TV)."},
+  {s:"Beauté / Esthétique",e:"Yves Rocher",m:"Franchise classique",de:"10 000 €",ap:"30 000 €",inv:"100 000 €",roy:"~2 % CA",pub:"N.C.",dur:"7",nb:"~660",note:"Produits fournis par la marque."},
+  {s:"Beauté / Esthétique",e:"Dessange",m:"Franchise classique",de:"20 000 €",ap:"40 000 €",inv:"150 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~150",note:"70 ans d'expérience. Positionnement premium."},
+  {s:"Beauté / Esthétique",e:"Body Minute",m:"Franchise classique",de:"15 000 €",ap:"30 000 €",inv:"80 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~100",note:"Concept express épilation & beauté."},
+  {s:"Beauté / Esthétique",e:"L'Onglerie",m:"Franchise classique",de:"12 000 €",ap:"15 000 €",inv:"60 000 €",roy:"~4 % CA",pub:"~1 % CA",dur:"7",nb:"~200",note:"Apport le plus bas du secteur."},
+  {s:"Beauté / Esthétique",e:"Depil Tech",m:"Franchise classique",de:"25 000 €",ap:"40 000 €",inv:"120 000 €",roy:"~6 % CA",pub:"~2 % CA",dur:"7",nb:"~200",note:"Épilation lumière pulsée."},
+  {s:"Beauté / Esthétique",e:"Beauty Success",m:"Franchise classique",de:"20 000 €",ap:"150 000 €",inv:"300 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~350",note:"Institut + parfumerie. CA fort."},
+  {s:"Coiffure",e:"Tchip Coiffure",m:"Franchise classique",de:"8 000 €",ap:"25 000 €",inv:"80 000 €",roy:"~3 % CA",pub:"~1 % CA",dur:"7",nb:"~200",note:"Prix accessible."},
+  {s:"Coiffure",e:"Jean-Louis David",m:"Franchise classique",de:"15 000 €",ap:"40 000 €",inv:"120 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"7",nb:"~300",note:"Groupe Provalliance. Milieu de gamme."},
+  {s:"Coiffure",e:"Franck Provost",m:"Franchise classique",de:"20 000 €",ap:"50 000 €",inv:"150 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~400",note:"Marque phare Groupe Provalliance."},
+  {s:"Services à la personne",e:"O2 Care Services",m:"Franchise classique",de:"13 000 €",ap:"15 000 €",inv:"60 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:">300",note:"Leader français services à domicile."},
+  {s:"Services à la personne",e:"Shiva",m:"Franchise classique",de:"14 000 €",ap:"20 000 €",inv:"70 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:">400",note:"Modèle marketplace + franchise."},
+  {s:"Services à la personne",e:"Babychou Services",m:"Franchise classique",de:"12 000 €",ap:"15 000 €",inv:"50 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~200",note:"Garde d'enfants. Modèle léger sans local."},
+  {s:"Services à la personne",e:"Les Seniors",m:"Franchise classique",de:"10 000 €",ap:"15 000 €",inv:"45 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"7",nb:"~150",note:"Silver economy. Fort potentiel."},
+  {s:"Commerce alimentaire",e:"Picard",m:"Franchise classique",de:"25 000 €",ap:"100 000 €",inv:"500 000 €",roy:"~2 % CA",pub:"~1 % CA",dur:"10",nb:"~900",note:"Surgelés premium. CA 550–800k€/an."},
+  {s:"Commerce alimentaire",e:"Biocoop",m:"Coopérative franchise",de:"8 000 €",ap:"30 000 €",inv:"200 000 €",roy:"~2 % CA",pub:"~1 % CA",dur:"10",nb:"~600",note:"Modèle coopératif. Engagement éthique."},
+  {s:"Commerce alimentaire",e:"Franprix",m:"Franchise classique",de:"7 000 €",ap:"40 000 €",inv:"200 000 €",roy:"~3 % CA",pub:"~2 % CA",dur:"10",nb:">800",note:"Zone urbaine dense. Groupe Casino."},
+  {s:"Commerce alimentaire",e:"Nicolas",m:"Franchise classique",de:"15 000 €",ap:"40 000 €",inv:"150 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:"~400",note:"Caviste historique. Formation vins forte."},
+  {s:"Bricolage / Maison",e:"Tryba",m:"Franchise classique",de:"15 000 €",ap:"40 000 €",inv:"200 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:">350",note:"Menuiseries & fermetures."},
+  {s:"Bricolage / Maison",e:"Arthur Bonnet",m:"Franchise classique",de:"4 000 €",ap:"40 000 €",inv:"180 000 €",roy:"~3 % CA",pub:"~1 % CA",dur:"10",nb:"~200",note:"Cuisine sur mesure. DE parmi les plus bas."},
+  {s:"Bricolage / Maison",e:"Desjoyaux",m:"Franchise classique",de:"4 500 €",ap:"40 000 €",inv:"150 000 €",roy:"~3 % CA",pub:"~1 % CA",dur:"10",nb:"~200",note:"Piscines. Très faible droit d'entrée."},
+  {s:"Optique",e:"Afflelou",m:"Franchise classique",de:"35 000 €",ap:"80 000 €",inv:"400 000 €",roy:"~3 % CA",pub:"~3 % CA",dur:"10",nb:">1 000",note:"Très forte notoriété TV."},
+  {s:"Optique",e:"Optical Center",m:"Franchise classique",de:"25 000 €",ap:"60 000 €",inv:"300 000 €",roy:"~3 % CA",pub:"~2 % CA",dur:"10",nb:">450",note:"Prix compétitifs. Montée en puissance."},
+  {s:"Optique",e:"Krys",m:"Coopérative franchise",de:"20 000 €",ap:"50 000 €",inv:"250 000 €",roy:"~3 % CA",pub:"~2 % CA",dur:"10",nb:">1 100",note:"Leader nb points de vente."},
+  {s:"Sport / Fitness",e:"L'Orange Bleue",m:"Franchise classique",de:"25 000 €",ap:"40 000 €",inv:"200 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">450",note:"Salle accessible. Forte expansion."},
+  {s:"Sport / Fitness",e:"Keepcool",m:"Franchise classique",de:"20 000 €",ap:"35 000 €",inv:"150 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">350",note:"Format compact. Franchisés investisseurs."},
+  {s:"Sport / Fitness",e:"Fitness Park",m:"Franchise classique",de:"30 000 €",ap:"60 000 €",inv:"300 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">200",note:"Grande surface >1 000m². Équipement lourd."},
+  {s:"Automobile",e:"Speedy",m:"Franchise classique",de:"20 000 €",ap:"50 000 €",inv:"200 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">550",note:"Entretien multi-marques."},
+  {s:"Automobile",e:"Midas",m:"Franchise classique",de:"18 000 €",ap:"50 000 €",inv:"180 000 €",roy:"~5 % CA",pub:"~2 % CA",dur:"10",nb:">350",note:"Entretien & pneumatiques."},
+  {s:"Automobile",e:"Norauto",m:"Franchise classique",de:"25 000 €",ap:"80 000 €",inv:"300 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"10",nb:">400",note:"Centre auto + atelier. Groupe Mobivia."},
+  {s:"Hôtellerie",e:"B&B Hotels",m:"Franchise classique",de:"30 000 €",ap:"200 000 €",inv:"600 000 €",roy:"~4 % CA",pub:"~3 % CA",dur:"20",nb:">350",note:"Budget. Invest. hors immobilier."},
+  {s:"Hôtellerie",e:"Logis Hotels",m:"Label / franchise",de:"10 000 €",ap:"40 000 €",inv:"200 000 €",roy:"~3 % CA",pub:"~2 % CA",dur:"10",nb:"~2 500",note:"Hôtels-restaurants indépendants labellisés."},
+  {s:"Hôtellerie",e:"Kyriad",m:"Franchise classique",de:"50 000 €",ap:"500 000 €",inv:"1 500 000 €",roy:"~4 % CA",pub:"~1 % CA",dur:"20",nb:"~130",note:"Groupe Louvre Hotels. Invest. très élevé."},
+  {s:"Enseignement / Formation",e:"Acadomia",m:"Franchise classique",de:"12 000 €",ap:"15 000 €",inv:"50 000 €",roy:"~8 % CA",pub:"~2 % CA",dur:"5",nb:">450",note:"Leader soutien scolaire à domicile."},
+  {s:"Enseignement / Formation",e:"Abracadabra",m:"Franchise classique",de:"10 000 €",ap:"15 000 €",inv:"45 000 €",roy:"~7 % CA",pub:"~2 % CA",dur:"5",nb:"~150",note:"Soutien scolaire en agence."},
+  {s:"Enseignement / Formation",e:"Cours Legendre",m:"Franchise classique",de:"15 000 €",ap:"20 000 €",inv:"60 000 €",roy:"~8 % CA",pub:"~2 % CA",dur:"5",nb:"~100",note:"Enseignement supérieur & prépa."},
+  {s:"Informatique / Télécom",e:"SFR Business Team",m:"Franchise / partenariat",de:"15 000 €",ap:"30 000 €",inv:"100 000 €",roy:"~4 % CA",pub:"~1 % CA",dur:"5",nb:"~300",note:"Partenariat revendeur SFR. B2B."},
+  {s:"Informatique / Télécom",e:"Phone House",m:"Franchise classique",de:"20 000 €",ap:"40 000 €",inv:"150 000 €",roy:"~4 % CA",pub:"~2 % CA",dur:"5",nb:"~200",note:"Distribution téléphonie et accessoires."},
+  {s:"Conciergerie locative",e:"Primo Conciergerie",m:"Franchise classique",de:"25 000–50 000 €",ap:"25 000 €",inv:"40 000 €",roy:"4–6 % CA",pub:"~1,5 % CA",dur:"5",nb:"90+ agences",note:"Réseau leader. Levée 1,2M€."},
+  {s:"Conciergerie locative",e:"Les Services d'Aline",m:"Franchise classique",de:"20 000–45 000 €",ap:"20 000 €",inv:"35 000 €",roy:"4–6 % CA",pub:"~1,5 % CA",dur:"5",nb:"50+ franchisés",note:"1er réseau haut de gamme. Zones touristiques premium."},
+  {s:"Conciergerie locative",e:"La Conciergerie.fr",m:"Franchise / réseau",de:"15 000–35 000 €",ap:"15 000 €",inv:"25 000 €",roy:"0–3 % CA",pub:"~1 % CA",dur:"5",nb:"70+ agences",note:"Redevances très basses. 2e réseau en taille."},
+  {s:"Conciergerie locative",e:"PLACID",m:"Franchise classique",de:"10 000–30 000 €",ap:"10 000 €",inv:"20 000 €",roy:"2–4 % CA",pub:"~1 % CA",dur:"5",nb:"40+ membres",note:"1er réseau sous-location. Modèle juridique à auditer."},
+  {s:"Conciergerie locative",e:"HostnFly",m:"City Manager",de:"0–2 000 €",ap:"2 000 €",inv:"5 000 €",roy:"0 %",pub:"0 %",dur:"5",nb:"30+ City Mgr",note:"Revenus ~15–20k€/an pour 15 biens."},
+  {s:"Conciergerie locative",e:"WeHost",m:"City Manager",de:"0–2 000 €",ap:"2 000 €",inv:"5 000 €",roy:"0 %",pub:"0 %",dur:"5",nb:"300+ villes",note:"Pionnier (2014). National."},
+  {s:"Conciergerie locative",e:"Welcome 2 Home",m:"Réseau mandataires",de:"Faible / N.C.",ap:"5 000 €",inv:"15 000 €",roy:"Commission partagée",pub:"Inclus",dur:"5",nb:"~50 mandataires",note:"Carte G fournie par le réseau."},
+  {s:"Conciergerie locative",e:"Guest Adom",m:"Partenariat plateforme",de:"Faible / N.C.",ap:"2 000 €",inv:"8 000 €",roy:"Quote-part commission",pub:"Variable",dur:"5",nb:"N.C.",note:"Pivot 2025 vers plateforme tech."},
+  {s:"Conciergerie locative",e:"Hostcare",m:"Partenariat indépendant",de:"0 €",ap:"0 €",inv:"3 000 €",roy:"0 %",pub:"0 %",dur:"3",nb:"Réseau dév.",note:"Meilleur reversement marché (70 % CA). Pas de zone exclusive."},
+  {s:"Conciergerie locative",e:"WelcomeHost",m:"City Manager",de:"0–2 000 €",ap:"2 000 €",inv:"5 000 €",roy:"N.C.",pub:"N.C.",dur:"3",nb:"En déploiement",note:"Très récent (2024). Peu de recul."},
+  {s:"Conciergerie locative",e:"Yes Conciergerie ★",m:"Franchise classique",de:"N.C. (contrat)",ap:"N.C.",inv:"N.C.",roy:"6 % CA (min 650 €HT/mois à M+4)",pub:"2 800 €HT/an + 250 €HT/mois",dur:"N.C.",nb:"N.C.",note:"Plancher 8 500€HT/an (an1-2), 9 500€HT (an3). Channel manager refacturé aux propriétaires.",yes:true},
+  {s:"Conciergerie d'entreprise",e:"La Minut'Rit",m:"Franchise classique",de:"15 000–25 000 €",ap:"15 000 €",inv:"40 000 €",roy:"5–6 % CA",pub:"~1 % CA",dur:"5",nb:"35+ franchisés",note:"Abonnement 5–10€/salarié/mois. Scalable."},
+  {s:"Conciergerie d'entreprise",e:"Box'n Services",m:"Franchise classique",de:"12 000–28 000 €",ap:"12 000 €",inv:"30 000 €",roy:"0 % + 330 €/mois",pub:"Inclus",dur:"5",nb:"30+ franchisés",note:"0 % royalties mais SaaS 330€/mois."},
+  {s:"Conciergerie luxe",e:"The French Concierge",m:"Franchise classique",de:"50 000–200 000 €",ap:"50 000 €",inv:"200 000 €",roy:"4–6 % CA",pub:"~2 % CA",dur:"5",nb:"15+ franchisés",note:"Ticket le plus élevé. Clientèle CSP+ très exigeante."},
+];
+const conc=[
+  {e:"🔵 Primo Conciergerie",type:"Franchise classique",seg:"Loc. saisonnière haut de gamme",de:"25 000–50 000 €",ap:"25 000 €",rev:"4–6 % CA",comm:"15–25 %",zone:"Oui – territoire",outils:"Channel mgr, PMS, CRM, revenue mgmt",note:"Réseau leader. Levée 1,2M€.",tc:"tb"},
+  {e:"🔵 Les Services d'Aline",type:"Franchise classique",seg:"Loc. saisonnière premium touristique",de:"20 000–45 000 €",ap:"20 000 €",rev:"4–6 % CA",comm:"25–35 %",zone:"Oui",outils:"CRM, outils gestion, PLV",note:"1er réseau haut de gamme. Zones littoral/montagne.",tc:"tb"},
+  {e:"🔵 La Conciergerie.fr",type:"Franchise / réseau",seg:"Loc. saisonnière généraliste",de:"15 000–35 000 €",ap:"15 000 €",rev:"0–3 % CA",comm:"20–30 %",zone:"Oui (selon contrat)",outils:"SI centralisé, plateforme gestion",note:"Redevances très basses. Bon ratio économique.",tc:"tb"},
+  {e:"🔵 PLACID",type:"Franchise classique",seg:"Sous-location grandes villes",de:"10 000–30 000 €",ap:"10 000 €",rev:"2–4 % CA",comm:"N/A (sous-location)",zone:"Oui – par ville",outils:"PMS, contrats types, outils sous-loc.",note:"1er réseau sous-location.",tc:"tb"},
+  {e:"🟡 HostnFly",type:"City Manager",seg:"Loc. saisonnière généraliste",de:"0–2 000 €",ap:"2 000 €",rev:"0 %",comm:"~20 %",zone:"Oui – par ville",outils:"Channel mgr, app proprio, leads",note:"Revenus ~15–20k€/an pour 15 biens.",tc:"ty"},
+  {e:"🟡 WeHost",type:"City Manager",seg:"Loc. saisonnière national",de:"0–2 000 €",ap:"2 000 €",rev:"0 %",comm:"~20–25 %",zone:"Oui – par ville",outils:"Logiciel interne, app, channel mgr, séminaire",note:"Pionnier (2014). 300+ villes.",tc:"ty"},
+  {e:"🟢 Welcome 2 Home",type:"Réseau mandataires",seg:"Loc. saisonnière généraliste",de:"N.C. (faible)",ap:"5 000 €",rev:"Commission partagée",comm:"~20–25 %",zone:"N.C.",outils:"Channel mgr, revenu mgr, carte G fournie",note:"Avantage clé : carte G fournie.",tc:"tv"},
+  {e:"🟡 Guest Adom",type:"Partenariat plateforme",seg:"Loc. saisonnière tech-first",de:"N.C. (faible)",ap:"2 000 €",rev:"Quote-part commission",comm:"~20 %",zone:"Non",outils:"Multi-diffusion, calendrier synchro",note:"Pivot 2025 vers plateforme tech.",tc:"ty"},
+  {e:"🔴 Hostcare",type:"Partenariat indépendant",seg:"Loc. saisonnière souple",de:"0 €",ap:"0 €",rev:"0 %",comm:"~20 %",zone:"Non",outils:"Outils plateforme mis à disposition",note:"Meilleur reversement marché (70 % CA).",tc:"tr"},
+  {e:"🟡 WelcomeHost",type:"City Manager (récent)",seg:"Loc. saisonnière péri-urbaine",de:"0–2 000 €",ap:"2 000 €",rev:"N.C.",comm:"~20 %",zone:"Oui – par zone",outils:"Solution clé en main (en construction)",note:"Très récent (2024).",tc:"ty"},
+  {e:"🔵 La Minut'Rit",type:"Franchise classique",seg:"Conciergerie d'entreprise",de:"15 000–25 000 €",ap:"15 000 €",rev:"5–6 % CA",comm:"N/A (B2B)",zone:"Oui – bassin emploi",outils:"Logiciels gestion, plateforme salariés",note:"Abonnement 5–10€/salarié/mois.",tc:"tb"},
+  {e:"🔵 Box'n Services",type:"Franchise classique",seg:"Conciergerie d'entreprise",de:"12 000–28 000 €",ap:"12 000 €",rev:"0 % + 330 €/mois",comm:"N/A (B2B)",zone:"Oui",outils:"Plateforme digitale (incluse abonnement mensuel)",note:"0 % royalties mais SaaS 330€/mois.",tc:"tb"},
+  {e:"🔵 The French Concierge",type:"Franchise classique",seg:"Conciergerie luxe & prestige",de:"50 000–200 000 €",ap:"50 000 €",rev:"4–6 % CA",comm:"30–40 %",zone:"Oui – villes/quartiers",outils:"Outils luxe, CRM premium, réseau prestataires exclusifs",note:"Ticket le plus élevé.",tc:"tb"},
+];
+const compData=[
+  {e:"La Conciergerie.fr",type:"Franchise",de:"15–35k€",rev:"0–3 % CA",fixe:"~500–1 500 €",ap:"15 000 €",zone:"Oui"},
+  {e:"PLACID",type:"Franchise",de:"10–30k€",rev:"2–4 % CA",fixe:"~1 000–2 000 €",ap:"10 000 €",zone:"Oui"},
+  {e:"Primo Conciergerie",type:"Franchise",de:"25–50k€",rev:"4–6 % CA",fixe:"~2 000–3 500 €",ap:"25 000 €",zone:"Oui"},
+  {e:"Les Services d'Aline",type:"Franchise",de:"20–45k€",rev:"4–6 % CA",fixe:"~2 000–3 000 €",ap:"20 000 €",zone:"Oui"},
+  {e:"La Minut'Rit",type:"Franchise",de:"15–25k€",rev:"5–6 % CA",fixe:"~1 500–2 500 €",ap:"15 000 €",zone:"Oui"},
+  {e:"The French Concierge",type:"Franchise",de:"50–200k€",rev:"4–6 % CA",fixe:"~3 000–5 000 €",ap:"50 000 €",zone:"Oui"},
+  {e:"HostnFly",type:"City Mgr",de:"0–2k€",rev:"0 %",fixe:"—",ap:"2 000 €",zone:"Oui"},
+  {e:"WeHost",type:"City Mgr",de:"0–2k€",rev:"0 %",fixe:"—",ap:"2 000 €",zone:"Oui"},
+  {e:"Hostcare",type:"Partenariat",de:"0 €",rev:"0 %",fixe:"—",ap:"0 €",zone:"Non"},
+];
+const glGen=[
+  {t:"Droit d'entrée (RIF)",d:"Somme versée à la signature. Couvre accès marque, savoir-faire, formation initiale.",i:"Non remboursable. Payable après 20j de réflexion post-DIP (Loi Doubin)."},
+  {t:"Royalties",d:"% du CA HT versé périodiquement au franchiseur pour usage de la marque et accompagnement.",i:"Moy. France : 4 % CA HT. Conciergerie : 0–6 %."},
+  {t:"Redevance publicitaire",d:"% CA dédié aux campagnes nationales. Comptabilité séparée des royalties.",i:"1–3 % CA en général."},
+  {t:"Commission propriétaire",d:"Dans la conciergerie : % prélevé sur les loyers voyageurs versés au propriétaire.",i:"15–40 % selon positionnement. C'est le CA du concierge (≠ royalties)."},
+  {t:"City Manager",d:"Partenaire local d'un réseau, gère des biens sans être franchisé classique.",i:"Faible ticket mais revenus limités — le siège garde la majorité des honoraires."},
+  {t:"Carte G",d:"Carte professionnelle obligatoire pour gérer des biens pour le compte de tiers (CCI).",i:"Certains réseaux la fournissent. Sinon : diplôme BAC+3 requis."},
+  {t:"DIP",d:"Document d'Information Précontractuel remis au moins 20j avant signature. Obligatoire (Loi Doubin 1989).",i:"Exiger et analyser avant tout engagement."},
+  {t:"BFR",d:"Besoin en Fonds de Roulement : trésorerie pour les premiers mois avant encaissements.",i:"Souvent 20–50 % de l'investissement total."},
+];
+const glReg=[
+  {t:"Loi Le Meur (nov. 2024)",d:"DPE A-E obligatoire, abattements fiscaux réduits, pouvoirs maires renforcés, amendes 10–20k€.",i:"Réduit potentiellement le nb de biens disponibles. Intégrer dans projections CA."},
+  {t:"DPE meublé touristique",d:"Depuis nov. 2024 : DPE A-E obligatoire pour louer en courte durée. F-G interdits.",i:"Auditer le DPE des biens propriétaires avant signature de mandat."},
+  {t:"Numéro d'enregistrement",d:"Obligatoire dans certaines communes sur les annonces de location touristique.",i:"Démarche administrative à accompagner pour les propriétaires clients."},
+  {t:"Loi Hoguet",d:"Encadre la gestion locative professionnelle. Impose carte G, RCP et garantie financière.",i:"City Managers sans carte G doivent être rattachés à un réseau titulaire."},
+];
+const srcs=["FFF – Fédération Française de la Franchise · franchise-fff.com · 2025","L'Officiel de la Franchise · officieldelafranchise.fr · 2024–2026","Franchise Magazine · franchise-magazine.com · 2024–2026","Hostcare Magazine – comparatif réseaux · hostcarefrance.fr · Janv. 2026","AC-Franchise annuaire conciergerie · ac-franchise.com · 2025","WelcomeHost – guide franchise vs réseau · welcomehost.fr · Mai 2026","LMNP.ai – réglementation 2026 · lmnp.ai · Mars 2026"];
+
+function fmtN(n){return n>=1000000?(n/1000000).toFixed(1)+'M€':n>=1000?(n/1000).toFixed(0)+'k€':n+'€'}
+function fmtF(n){return n.toLocaleString('fr-FR')+' €'}
+function renderCharts(){
+  const C=['#1a56db','#057a55','#c27803','#7c3aed'];
+  [['ch-de','de',C[0]],['ch-inv','inv',C[1]],['ch-ap','ap',C[2]]].forEach(([id,k,c])=>{
+    const it=[...syn].sort((a,b)=>b[k]-a[k]).slice(0,8),mx=Math.max(...it.map(d=>d[k]));
+    document.getElementById(id).innerHTML=it.map(d=>`<div class="bar-row"><div class="bar-lbl">${d.s.length>16?d.s.slice(0,15)+'…':d.s}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(d[k]/mx*100)}%;background:${c}"></div></div><div class="bar-val">${fmtN(d[k])}</div></div>`).join('');
+  });
+  const rys=[...syn].sort((a,b)=>b.royMax-a.royMax).slice(0,8),rm=Math.max(...rys.map(d=>d.royMax));
+  document.getElementById('ch-ry').innerHTML=rys.map(d=>`<div class="bar-row"><div class="bar-lbl">${d.s.length>16?d.s.slice(0,15)+'…':d.s}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(d.royMax/rm*100)}%;background:${C[3]}"></div></div><div class="bar-val">${d.roy}</div></div>`).join('');
+}
+function renderSyn(){document.getElementById('syn-body').innerHTML=syn.map(d=>`<tr><td><strong>${d.s}</strong></td><td>${fmtF(d.de)}</td><td style="color:#64748b">${fmtF(d.dmin)} → ${fmtF(d.dmax)}</td><td>${d.roy}</td><td>${fmtF(d.ap)}</td><td><strong>${fmtF(d.inv)}</strong></td><td style="text-align:center">${d.nb}</td><td style="font-size:10px;color:#64748b">${d.rem}</td></tr>`).join('');}
+function renderEnseignes(){
+  const sel=document.getElementById('flt-sec');
+  [...new Set(ens.map(d=>d.s))].forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);});
+  filterE();
+}
+function filterE(){
+  const q=document.getElementById('srch').value.toLowerCase(),sec=document.getElementById('flt-sec').value,mod=document.getElementById('flt-mod').value.toLowerCase();
+  const filtered=ens.filter(d=>(!q||d.e.toLowerCase().includes(q)||d.note.toLowerCase().includes(q))&&(!sec||d.s===sec)&&(!mod||d.m.toLowerCase().includes(mod)));
+  const grouped={};filtered.forEach(d=>{if(!grouped[d.s])grouped[d.s]=[];grouped[d.s].push(d);});
+  let html='';
+  for(const[sect,rows]of Object.entries(grouped)){
+    html+=`<tr class="sh-hdr"><td colspan="10">▶ ${sect.toUpperCase()}</td></tr>`;
+    rows.forEach(d=>{const mc=d.m.includes('City')?'ty':d.m.includes('mandataires')?'tv':d.m.includes('indépendant')?'tr':d.m.includes('opérative')||d.m.includes('Label')?'tv':'tb';html+=`<tr${d.yes?' class="yes-row"':''}><td><strong>${d.e}</strong></td><td><span class="tag ${mc}">${d.m}</span></td><td>${d.de}</td><td>${d.ap}</td><td>${d.inv}</td><td>${d.roy}</td><td>${d.pub}</td><td style="text-align:center">${d.dur} ans</td><td style="text-align:center">${d.nb}</td><td style="font-size:10px;color:#64748b;max-width:170px">${d.note}</td></tr>`;});
+  }
+  document.getElementById('ens-body').innerHTML=html||'<tr><td colspan="10" style="text-align:center;padding:1rem;color:#94a3b8">Aucun résultat.</td></tr>';
+}
+function filterConc(){
+  const seg=document.getElementById('flt-cseg').value.toLowerCase(),typ=document.getElementById('flt-ctype').value.toLowerCase();
+  const f=conc.filter(d=>(!seg||d.seg.toLowerCase().includes(seg))&&(!typ||d.type.toLowerCase().includes(typ)));
+  document.getElementById('conc-cards').innerHTML=f.map(d=>`<div class="conc-card${d.yes?' yes-card':''}"><h3>${d.e}</h3><div style="margin-bottom:.5rem"><span class="tag ${d.tc}">${d.type}</span> <span style="font-size:9.5px;color:#94a3b8">${d.seg}</span></div><div class="crow"><span class="k">Droit d'entrée</span><span class="v">${d.de}</span></div><div class="crow"><span class="k">Apport minimum</span><span class="v">${d.ap}</span></div><div class="crow"><span class="k">Redevance réseau</span><span class="v">${d.rev}</span></div><div class="crow"><span class="k">Commission proprio</span><span class="v">${d.comm}</span></div><div class="crow"><span class="k">Zone exclusive</span><span class="v">${d.zone}</span></div><div class="crow"><span class="k">Outils tech</span><span class="v">${d.outils}</span></div><div class="note-box">${d.note}</div></div>`).join('');
+}
+function renderGloss(){
+  document.getElementById('gl-gen').innerHTML=glGen.map(g=>`<div class="gl-item"><div class="term">${g.t}</div><div class="def">${g.d}</div><div class="impact">⚡ ${g.i}</div></div>`).join('');
+  document.getElementById('gl-reg').innerHTML=glReg.map(g=>`<div class="gl-item"><div class="term">${g.t}</div><div class="def">${g.d}</div><div class="impact">⚡ ${g.i}</div></div>`).join('');
+  document.getElementById('src-list').innerHTML=srcs.map(s=>`<li>${s}</li>`).join('');
+}
+function renderYes(){document.getElementById('yes-body').innerHTML=compData.map(d=>`<tr${d.yes?' class="yes"':''}><td><strong>${d.e}</strong></td><td>${d.type}</td><td>${d.de}</td><td>${d.rev}</td><td style="white-space:pre-line">${d.fixe}</td><td>${d.ap}</td><td>${d.zone}</td></tr>`).join('');}
+function showTab(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById('pane-'+id).classList.add('active');btn.classList.add('active');}
+
+const editableIds=['yes-intro-text','reco-up-list','reco-down-list','reco-ok-list','verdict-text'];
+function startEdit(){
+  document.getElementById('edit-bar').style.display='flex';
+  document.getElementById('edit-btn').style.display='none';
+  editableIds.forEach(id=>{const el=document.getElementById(id);if(el){el.contentEditable='true';el.style.outline='2px dashed #60a5fa';el.style.borderRadius='6px';el.style.padding='4px';}});
+}
+function saveEdit(){
+  document.getElementById('edit-bar').style.display='none';
+  document.getElementById('edit-btn').style.display='';
+  editableIds.forEach(id=>{const el=document.getElementById(id);if(el){el.contentEditable='false';el.style.outline='';el.style.padding='';}});
+  const data={};editableIds.forEach(id=>{const el=document.getElementById(id);if(el)data[id]=el.innerHTML;});
+  localStorage.setItem('yes-edits',JSON.stringify(data));
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:20px;right:20px;background:#059669;color:#fff;padding:10px 18px;border-radius:10px;font-size:12px;font-weight:500;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.15)';
+  t.textContent='✓ Modifications sauvegardées';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+}
+function cancelEdit(){
+  document.getElementById('edit-bar').style.display='none';
+  document.getElementById('edit-btn').style.display='';
+  editableIds.forEach(id=>{const el=document.getElementById(id);if(el){el.contentEditable='false';el.style.outline='';el.style.padding='';}});
+  loadSavedEdits();
+}
+function loadSavedEdits(){
+  try{const data=JSON.parse(localStorage.getItem('yes-edits')||'{}');editableIds.forEach(id=>{if(data[id]){const el=document.getElementById(id);if(el)el.innerHTML=data[id];}});}catch(e){}
+}
+
+// ── BUILDER TARIFAIRE INTERACTIF ──
+const DE_BASE = 19800;
+
+function getRows(){return document.querySelectorAll('#pane-propale .brow[data-id]');}
+
+function calcDE(){
+  let extra=0, labels=[];
+  getRows().forEach(row=>{
+    if(row.classList.contains('in-de')){
+      const amt=parseFloat(row.querySelector('.edit-amt')?.value||0)||0;
+      const lbl=row.dataset.label||row.querySelector('.bname')?.textContent?.trim()||'';
+      if(amt>0){extra+=amt;labels.push({lbl,amt});}
+    }
+  });
+  return {total:DE_BASE+extra,extra,labels};
+}
+
+function refreshDE(){
+  const {total,extra,labels}=calcDE();
+  const fmt=n=>n.toLocaleString('fr-FR')+' €HT';
+  document.getElementById('de-total').textContent=fmt(total);
+  document.getElementById('de-display').textContent=fmt(total);
+  document.getElementById('recap-de').textContent=fmt(total);
+  document.getElementById('de-badge').textContent=(extra>0?'+':'')+extra.toLocaleString('fr-FR')+' €';
+  document.getElementById('de-breakdown').textContent=
+    extra>0 ? 'Base 19 800 € + absorbés : '+labels.map(l=>l.lbl+' ('+l.amt.toLocaleString('fr-FR')+'€)').join(', ')
+            : 'Base : 19 800 € — aucune ligne absorbée';
+  // liste incluse sous le DE
+  const incl=document.getElementById('de-included-list');
+  incl.innerHTML=labels.length ? labels.map(l=>`<span style="display:inline-block;margin:1px 3px 1px 0;background:#dbeafe;color:#1e40af;border-radius:5px;padding:1px 7px;font-size:9.5px">✓ ${l.lbl} — ${l.amt.toLocaleString('fr-FR')} €</span>`).join('') : '';
+  // remaining list
+  refreshRemaining();
+  // outil & setup previews
+  const outilAmt=parseFloat(document.querySelector('[data-id="outil"] .edit-amt')?.value||0)||0;
+  const setupAmt=parseFloat(document.querySelector('[data-id="setup-sept"] .edit-amt')?.value||0)||0;
+  const leadsAmt=parseFloat(document.querySelector('[data-id="leads"] .edit-amt')?.value||0)||0;
+  const el=document.getElementById('outil-preview');if(el)el.textContent=outilAmt?outilAmt.toLocaleString('fr-FR')+' €HT':'À définir';
+  const se=document.getElementById('setup-preview');if(se)se.textContent=setupAmt?setupAmt.toLocaleString('fr-FR')+' €HT':'À définir';
+  const le=document.querySelector('#variable-list .brow:first-child .bamt');if(le)le.textContent=leadsAmt?leadsAmt.toLocaleString('fr-FR')+' €/deal':'150 €/deal';
+  // save state
+  const state={};
+  getRows().forEach(r=>{state[r.dataset.id]={inDE:r.classList.contains('in-de'),amt:r.querySelector('.edit-amt')?.value||0};});
+  try{localStorage.setItem('builder-state',JSON.stringify(state));}catch(e){}
+}
+
+function refreshRemaining(){
+  const list=document.getElementById('remaining-list');
+  const revPct=document.getElementById('rev-pct')?.value||'6';
+  const plancherAmt=parseFloat(document.getElementById('plancher-amt')?.value||8500).toLocaleString('fr-FR');
+  let html=`<div class="brow fixed"><span class="bname">Redevance réseau</span><span class="bamt">${revPct} % CA</span></div><div class="brow fixed"><span class="bname">Plancher an 1&2 (M+4)</span><span class="bamt red">${plancherAmt} €HT/an</span></div>`;
+  getRows().forEach(row=>{
+    if(!row.classList.contains('in-de')&&!row.classList.contains('fixed')){
+      const id=row.dataset.id;
+      if(['pack-info','setup-rs','mktg','cm','maint'].includes(id)){
+        const lbl=row.dataset.label||'';
+        const amt=parseFloat(row.querySelector('.edit-amt')?.value||0)||0;
+        const fmted=amt?amt.toLocaleString('fr-FR')+' €HT':'À définir';
+        html+=`<div class="brow out" style="opacity:.85"><span class="bname">${lbl}</span><span class="bamt red">${fmted}</span></div>`;
+      }
+    }
+  });
+  const absorbed=document.querySelectorAll('#pane-propale .brow.in-de[data-id]').length;
+  document.getElementById('recap-absorbed').textContent=absorbed;
+  // plancher
+  const plancherVal=parseFloat(document.getElementById('plancher-amt')?.value||8500)||8500;
+  const elPlancher=document.getElementById('recap-plancher');
+  if(elPlancher)elPlancher.textContent=plancherVal.toLocaleString('fr-FR')+' €HT/an';
+  // total annuel hors DE = plancher + charges non absorbées
+  const absorbableIds=['pack-info','setup-rs','mktg','cm','maint'];
+  let chargesHorsDE=0;
+  absorbableIds.forEach(id=>{
+    const r=document.querySelector(`[data-id="${id}"]`);
+    if(r&&r.classList.contains('out')){
+      chargesHorsDE+=parseFloat(r.querySelector('.edit-amt')?.value||0)||0;
+    }
+  });
+  const totalAnnuel=plancherVal+chargesHorsDE;
+  const elTotal=document.getElementById('recap-total-annuel');
+  if(elTotal)elTotal.textContent=totalAnnuel.toLocaleString('fr-FR')+' €HT/an';
+  const elMensuel=document.getElementById('recap-mensuel');
+  if(elMensuel)elMensuel.textContent=Math.round(totalAnnuel/12).toLocaleString('fr-FR')+' €HT/mois';
+  list.innerHTML=html;
+}
+
+function toggleDE(btn){
+  const row=btn.closest('.brow');
+  const isIn=row.classList.contains('in-de');
+  row.classList.toggle('in-de',!isIn);
+  row.classList.toggle('out',isIn);
+  btn.textContent=isIn?'↑':'↓';
+  btn.title=isIn?'Absorber dans le DE':'Retirer du DE';
+  refreshDE();
+}
+
+function updateAmt(input){
+  const id=input.closest('.brow')?.dataset.id;
+  if(id==='outil'||id==='setup-sept'||id==='leads'){refreshDE();return;}
+  refreshDE();
+}
+
+function addCustomItem(){
+  const name=document.getElementById('new-item-name').value.trim();
+  const amt=parseFloat(document.getElementById('new-item-amt').value)||0;
+  if(!name)return;
+  const id='custom-'+Date.now();
+  const row=document.createElement('div');
+  row.className='brow out';row.dataset.id=id;row.dataset.label=name;row.dataset.amount=amt;
+  row.innerHTML=`<button class="toggle-de" onclick="toggleDE(this)" title="Absorber dans le DE">↑</button><span class="bname">${name}</span><input class="edit-amt" value="${amt}" onchange="updateAmt(this)" title="Modifier"> €HT<button onclick="this.closest('.brow').remove();refreshDE()" style="margin-left:auto;background:none;border:none;cursor:pointer;color:#94a3b8;font-size:14px" title="Supprimer">×</button>`;
+  document.querySelector('#pane-propale .builder-panel:first-child .builder-panel-body .new-item-row').before(row);
+  document.getElementById('new-item-name').value='';document.getElementById('new-item-amt').value='';
+  refreshDE();
+}
+
+function loadBuilderState(){
+  try{
+    const state=JSON.parse(localStorage.getItem('builder-state')||'{}');
+    Object.entries(state).forEach(([id,{inDE,amt}])=>{
+      const row=document.querySelector(`[data-id="${id}"]`);
+      if(!row)return;
+      const input=row.querySelector('.edit-amt');if(input&&amt)input.value=amt;
+      if(inDE&&!row.classList.contains('fixed')){
+        row.classList.add('in-de');row.classList.remove('out');
+        const btn=row.querySelector('.toggle-de');if(btn){btn.textContent='↓';btn.title='Retirer du DE';}
+      }
+    });
+    refreshDE();
+  }catch(e){refreshDE();}
+}
+
+renderCharts();renderSyn();renderEnseignes();filterConc();renderGloss();renderYes();loadSavedEdits();loadBuilderState();
+</script>
+</body>
+</html>
